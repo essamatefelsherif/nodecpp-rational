@@ -1,0 +1,31 @@
+{
+	"name"   : "@essamonline/nodecpp-rational",
+	"version": "1.0.0",
+	"description": "A Node.js native C++ addon that defines a JavaScript class for representing and manipulating rational numbers.",
+	"main"   : "lib/index.js",
+	"scripts": {
+		"test"        : "node --test test/rational.test.js",
+		"testCover"   : "node --experimental-test-coverage --test test/rational.test.js",
+		"testReport"  : "node --experimental-test-coverage --test-reporter=spec --test-reporter-destination=stdout --test-reporter=lcov --test-reporter-destination=docs/coverage/js/lcov.info --test test/rational.test.js",
+		"devGenhtml"  : "genhtml -o docs/coverage/js/html --config-file .lcovrc docs/coverage/js/lcov.info",
+		"devDoc"      : "rm -fr docs/src/js/* && jsdoc lib/*.js test/*.js -d docs/src/js",
+		"devCoveralls": "coveralls < docs/coverage/js/lcov.info"
+	},
+	"type"    : "commonjs",
+	"keywords": ["node.js", "C++", "addon"],
+	"author"  : {
+		"name" : "Essam A. El-Sherif",
+		"email": "esm.elsh@gmail.com",
+		"url"  : "https://essamatefelsherif.github.io/whoami"
+	},
+	"homepage": "https://github.com/essamatefelsherif/nodecpp-rational#readme",
+	"repository": {
+		"type": "git",
+		"url" : "git+https://github.com/essamatefelsherif/nodecpp-rational.git"
+	},
+	"license": "MIT",
+	"devDependencies": {
+		"coveralls-next": "^4.2.1",
+		"jsdoc": "^4.0.4"
+	}
+}
