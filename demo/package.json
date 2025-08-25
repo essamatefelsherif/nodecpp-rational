@@ -1,0 +1,25 @@
+{
+	"name"   : "demo",
+	"version": "1.0.0",
+	"description": "Demonstrates usage of the package @essamonline/nodecpp-rational",
+	"main"   : "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"type"    : "commonjs",
+	"keywords": ["node.js", "C++", "addon"],
+	"author"  : {
+		"name" : "Essam A. El-Sherif",
+		"email": "esm.elsh@gmail.com",
+		"url"  : "https://essamatefelsherif.github.io/whoami"
+	},
+	"homepage": "https://github.com/essamatefelsherif/nodecpp-rational#readme",
+	"repository": {
+		"type": "git",
+		"url" : "git+https://github.com/essamatefelsherif/nodecpp-rational.git"
+	},
+	"license": "MIT",
+	"dependencies": {
+		"@essamonline/nodecpp-rational": "file:.."
+	}
+}

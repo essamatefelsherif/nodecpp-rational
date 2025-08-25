@@ -10,7 +10,7 @@ const assert = require('node:assert').strict;
 /**
  * @const rational_addon {object} The C++ addon exported object.
  */
-const rational_addon = require('../src/build/Release/rational');
+const rational_addon = require('../build/Release/rational');
 
 /**
  * @const rational_module {object} The JavaScript module exported object.

@@ -25,4 +25,4 @@ clean: ## Clean all generated files
 	$(RM) *.out *.o *.so *.gcno *.gcda *.gcov ../docs/coverage/cpp
 
 clean-int: ## Clean intermediate generated files
-	$(RM) *.o *.so *.gcno *.gcda *.gcov
+	$(RM) *.out *.o *.so *.gcno *.gcda *.gcov
