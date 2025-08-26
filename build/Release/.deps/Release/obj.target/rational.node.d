@@ -1,1 +1,0 @@
-cmd_Release/obj.target/rational.node := g++ -o Release/obj.target/rational.node -shared -pthread -rdynamic -m64  -Wl,-soname=rational.node -Wl,--start-group Release/obj.target/rational/src/rational-addon.o Release/obj.target/rational/src/addon.o -Wl,--end-group 

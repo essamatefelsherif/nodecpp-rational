@@ -6,8 +6,8 @@
  * A C++ header that defines a template based class for representing and manipulating rational numbers.
  */
 
-#ifndef __ESM_RATIONAL_H__
-#define __ESM_RATIONAL_H__
+#ifndef __RATIONAL_H__
+#define __RATIONAL_H__
 
 #include <iomanip>
 #include <iostream>
@@ -17,7 +17,7 @@
 #include <limits>
 
 /**
- *
+ * A namespace to enclose the C++ rational class and global helper classes and functions.
  */
 namespace esm{
 	/**
@@ -25,8 +25,11 @@ namespace esm{
 	 */
 	class bad_rational : public std::domain_error{
 		public:
+			/** Default constructor. */
 			explicit bad_rational() : std::domain_error("bad rational: zero denominator"){}
-			explicit bad_rational(const char *what) : domain_error(what){}
+
+			/** One argument constructor. */
+			explicit bad_rational(const char *what) : std::domain_error(what){}
 	};
 
 	/**
@@ -36,43 +39,43 @@ namespace esm{
 	class rational{
 		private: /* Helper static functions [3] */
 
-			/** Greatest common divisor */
+			/** Greatest common divisor. */
 			static I inner_gcd(I, I, const I& = I(0));
 
-			/** Absolute value */
+			/** Absolute value. */
 			static I inner_abs(I, const I& = I(0));
 
-			/** Inspect the two given parameters are in normalized form */
+			/** Inspect the two given parameters are in normalized form. */
 			static bool is_normalized(I, I, const I& = I(0), const I& = I(1));
 
 		private: /* Helper member functions [2] */
 
-			/** Normalize the rational number i.e. no common factors and denominator is positive */
+			/** Normalize the rational number i.e. no common factors and denominator is positive. */
 			void normalize();
 
-			/** Light test of normalized rational number */
+			/** Light test of normalized rational number. */
 			bool test_invariant()const;
 
 		private:
-			I num;  /**< numerator (normalized).*/
-			I den;  /**< denominator (normalized).*/
+			I num;  /**< Numerator (normalized).*/
+			I den;  /**< Denominator (normalized).*/
 
 		public:
 			/* Constructors [4] */
-			rational();      /** Default constructor */
-			rational(I);     /** One argument constructor */
-			rational(I, I);  /** Two arguments constructor */
+			rational();      /**< Default constructor. */
+			rational(I);     /**< One argument constructor. */
+			rational(I, I);  /**< Two arguments constructor. */
 
 			template<typename J>
-			explicit rational(const rational<J>&);  /** Copy constructor */
+			explicit rational(const rational<J>&);  /**< Copy constructor. */
 
 			/* Access to representation [2] */
-			const I& numerator() const { return num; }    /**< Get numerator */
-			const I& denominator() const { return den; }  /**< Get denominator */
+			const I& numerator() const { return num; }    /**< Get numerator. */
+			const I& denominator() const { return den; }  /**< Get denominator. */
 
 			/* Assignment [2] */
-			rational& operator =(const I&);        /**< Assignment from Int type */
-			rational& assign(const I&, const I&);  /**< Assignment in place */
+			rational& operator =(const I&);        /**< Assignment from Int type. */
+			rational& assign(const I&, const I&);  /**< Assignment in place. */
 
 			/* Arithmetic assignment operators [8] */
 			rational& operator +=(const rational<I>&);  /**< Arithmetic assignment operator += */
@@ -80,23 +83,23 @@ namespace esm{
 			rational& operator *=(const rational<I>&);  /**< Arithmetic assignment operator *= */
 			rational& operator /=(const rational<I>&);  /**< Arithmetic assignment operator /= */
 
-			rational& operator +=(const I&);  /**< Arithmetic assignment operator += from int type */
-			rational& operator -=(const I&);  /**< Arithmetic assignment operator -= from int type */
-			rational& operator *=(const I&);  /**< Arithmetic assignment operator *= from int type */
-			rational& operator /=(const I&);  /**< Arithmetic assignment operator /= from int type */
+			rational& operator +=(const I&);  /**< Arithmetic assignment operator += from int type. */
+			rational& operator -=(const I&);  /**< Arithmetic assignment operator -= from int type. */
+			rational& operator *=(const I&);  /**< Arithmetic assignment operator *= from int type. */
+			rational& operator /=(const I&);  /**< Arithmetic assignment operator /= from int type. */
 
 			/* Increment and decrement operators [4] */
-			rational& operator ++();  /**< Pre-increment operator */
-			rational& operator --();  /**< Pre-decrement operator */
+			rational& operator ++();  /**< Pre-increment operator. */
+			rational& operator --();  /**< Pre-decrement operator. */
 
-			rational operator ++(int);  /**< Post-increment operator */
-			rational operator --(int);  /**< Post-decrement operator */
+			rational operator ++(int);  /**< Post-increment operator. */
+			rational operator --(int);  /**< Post-decrement operator. */
 
 			/* Operator not [1] */
-			bool operator !() const;  /**< Not operator */
+			bool operator !() const;  /**< Not operator. */
 
 			/* Boolean conversion [1] */
-			operator bool () const;  /**< Boolean conversion */
+			operator bool () const;  /**< Boolean conversion. */
 
 			/* Comparison operators [4] */
 			bool operator  <(const rational&) const;  /**< Comparison operator < */
@@ -105,18 +108,18 @@ namespace esm{
 			bool operator !=(const rational&) const;  /**< Comparison operator != */
 
 			/* Comparison with integers [4] */
-			bool operator  <(const I&) const;  /**< Comparison operator < int type */
-			bool operator  >(const I&) const;  /**< Comparison operator > int type */
-			bool operator ==(const I&) const;  /**< Comparison operator == int type */
-			bool operator !=(const I&) const;  /**< Comparison operator != int type */
+			bool operator  <(const I&) const;  /**< Comparison operator < int type. */
+			bool operator  >(const I&) const;  /**< Comparison operator > int type. */
+			bool operator ==(const I&) const;  /**< Comparison operator == int type. */
+			bool operator !=(const I&) const;  /**< Comparison operator != int type. */
 	};
 
 	/* Global unary operators [2] */
 	template<typename I>
-	rational<I> operator +(const rational<I>&);
+	rational<I> operator +(const rational<I>&); /**< Unary operator + */
 
 	template<typename I>
-	rational<I> operator -(const rational<I>&);
+	rational<I> operator -(const rational<I>&); /**< Unary operator - */
 
 	/* Global binary operators [12] */
 	template<typename I>

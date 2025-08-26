@@ -7,5 +7,7 @@ var hierarchy =
       [ "addon::WrappedRational", "classaddon_1_1WrappedRational.html", null ]
     ] ],
     [ "esm::rational< I >", "classesm_1_1rational.html", null ],
-    [ "esm::rational< long >", "classesm_1_1rational.html", null ]
+    [ "esm::rational< long >", "classesm_1_1rational.html", null ],
+    [ "utest::Suite", "structutest_1_1Suite.html", null ],
+    [ "utest::Test", "structutest_1_1Test.html", null ]
 ];

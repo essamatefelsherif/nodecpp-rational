@@ -4,7 +4,8 @@
 	"description": "Demonstrates usage of the package @essamonline/nodecpp-rational",
 	"main"   : "index.js",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"prestart": "npm install",
+		"start": "node index.js && node index.mjs"
 	},
 	"type"    : "commonjs",
 	"keywords": ["node.js", "C++", "addon"],

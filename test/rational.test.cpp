@@ -14,50 +14,61 @@
 
 #include "../include/rational.h"
 
-using namespace esm;
+/**
+ * A namespace to enclose the unit testing code.
+ */
+namespace utest{
 
-struct {
-	bool verbose;
-} cmdOptions = { true };
+	using namespace esm;
 
-typedef struct Test{
-	void (*method)(void);
-	std::string desc;
-	bool skip;
+	/** Define a structure variable to enclose testing options. */
+	struct {
+		bool verbose;
+	} cmdOptions = { false };
+
+	/** Define a unit test type. */
+	typedef struct Test{
+		void (*method)(void);
+		std::string desc;
+		bool skip;
+	}
+	*TestPtr;
+
+	/** Define a test suite type. */
+	typedef struct Suite{
+		std::string desc;
+		std::list<TestPtr> *testList;
+	}
+	*SuitePtr;
+
+	/** A list of pointers to test suites. */
+	std::list<SuitePtr> suites;
+
+	void loadTestData();     /**< Load test data into the suites list. */
+	void verboseExit();      /**< Count success, failures and/or skipped tests */
+	void testRunner();       /**< Run the tests loaded into the suites list. */
+	void makeTest(TestPtr);  /**< Run the unit test given by the test pointer. */
+
+	/** Assert true condition otherwise throws an exception. */
+	inline void _assert(bool test, const char *msg = ""){
+		if(!test) throw std::logic_error(msg);
+	}
+
+	void test1(); void test2(); void test3(); void test4(); void test5();
+	void test6(); void test7(); void test8(); void test9(); void test10();
+	void test11(); void test12(); void test13(); void test14(); void test15();
+	void test16(); void test17(); void test18(); void test19(); void test20();
+
+	/* Prepare test environment */
+	int testCount   = 1;
+	int passCount   = 0;
+	int failCount   = 0;
+	int skipCount   = 0;
 }
-*TestPtr;
-
-typedef struct Suite{
-	std::string desc;
-	std::list<TestPtr> *testList;
-}
-*SuitePtr;
-
-std::list<SuitePtr> suites;
-
-void loadTestData();
-void verboseExit();
-void testRunner();
-void makeTest(TestPtr);
-
-inline void _assert(bool test, const char *msg = ""){
-	if(!test) throw std::logic_error(msg);
-}
-
-void test1(); void test2(); void test3(); void test4(); void test5();
-void test6(); void test7(); void test8(); void test9(); void test10();
-void test11(); void test12(); void test13(); void test14(); void test15();
-void test16(); void test17(); void test18(); void test19(); void test20();
-
-/* Prepare test environment */
-int testCount   = 1;
-int passCount   = 0;
-int failCount   = 0;
-int cancelCount = 0;
-int skipCount   = 0;
-int todoCount   = 0;
 
 int main(){
+
+	using namespace utest;
 
 	loadTestData();
 	testRunner();
@@ -75,7 +86,7 @@ int main(){
 	return 0;
 }
 
-void loadTestData(){
+void utest::loadTestData(){
 
 	SuitePtr suitePtr = nullptr;
 	TestPtr testPtr = nullptr;
@@ -301,7 +312,7 @@ void loadTestData(){
 	suitePtr->testList->push_back(testPtr);
 }
 
-void testRunner(){
+void utest::testRunner(){
 
 	std::atexit(verboseExit);
 	if(cmdOptions.verbose) std::cerr << std::endl;
@@ -310,7 +321,7 @@ void testRunner(){
 	for(it1 = suites.begin(); it1 != suites.end(); ++it1){
 
 		std::string suiteDesc = (*it1)->desc;
-		std::cerr << suiteDesc << std::endl;
+		if(cmdOptions.verbose) std::cerr << suiteDesc << std::endl;
 
 		std::list<TestPtr> *testList = (*it1)->testList;
 
@@ -323,7 +334,7 @@ void testRunner(){
 	if(cmdOptions.verbose) std::cerr << std::endl;
 }
 
-void makeTest(TestPtr ptr){
+void utest::makeTest(TestPtr ptr){
 
 	const int testID = testCount++;
 
@@ -355,28 +366,25 @@ void makeTest(TestPtr ptr){
 	}
 }
 
-void verboseExit(){
+void utest::verboseExit(){
 	if(cmdOptions.verbose){
 		std::cout << std::endl;
 		std::cout << "▶ tests     " << --testCount   << std::endl;
 		std::cout << "▶ suites    " << suites.size() << std::endl;
 		std::cout << "▶ pass      " << passCount     << std::endl;
 		std::cout << "▶ fail      " << failCount     << std::endl;
-		std::cout << "▶ cancelled " << cancelCount   << std::endl;
 		std::cout << "▶ skipped   " << skipCount     << std::endl;
-		std::cout << "▶ todo      " << todoCount     << std::endl;
-//		std::cout << "▶ duration_ms" <<  Math.round(Date.now() - startTime));
 	}
 }
 
-/** Test#1 - Default constructor */
-void test1(){
+/** Test#1 - Default constructor. */
+void utest::test1(){
 	_assert(rational<int>().numerator() == 0);
 	_assert(rational<int>().denominator() == 1);
 }
 
-/** Test#2 - One argument constructor */
-void test2(){
+/** Test#2 - One argument constructor. */
+void utest::test2(){
 	_assert(rational<int>(1).numerator() == 1);
 	_assert(rational<int>(1).denominator() == 1);
 
@@ -387,8 +395,8 @@ void test2(){
 	_assert(rational<int>(0).denominator() == 1);
 }
 
-/** Test#3 - Two arguments constructor */
-void test3(){
+/** Test#3 - Two arguments constructor. */
+void utest::test3(){
 	_assert(rational<int>(1, 2).numerator() == 1);
 	_assert(rational<int>(1, 2).denominator() == 2);
 
@@ -405,8 +413,8 @@ void test3(){
 	_assert(rational<int>(0, 2).denominator() == 1);
 }
 
-/** Test#4 - Two arguments constructor invalid */
-void test4(){
+/** Test#4 - Two arguments constructor invalid. */
+void utest::test4(){
 	try{
 		rational<int>(2, 0);
 		throw bad_rational();
@@ -417,16 +425,17 @@ void test4(){
 	}
 }
 
-/** Test#5 - Copy constructor */
-void test5(){
-	rational<int> r(rational<long>(1, 2));
+/** Test#5 - Copy constructor. */
+void utest::test5(){
+	rational<long> rl(1L, 2L);
+	rational<int> ri(rl);
 
-	_assert(r.numerator() == 1);
-	_assert(r.denominator() == 2);
+	_assert(ri.numerator() == 1);
+	_assert(ri.denominator() == 2);
 }
 
-/** Test#6 - Assignment */
-void test6(){
+/** Test#6 - Assignment. */
+void utest::test6(){
 	rational<int> r = 3;
 
 	_assert(r.numerator() == 3);
@@ -437,8 +446,8 @@ void test6(){
 	_assert(r.denominator() == 2);
 }
 
-/** Test#7 - Arithmetic assignment */
-void test7(){
+/** Test#7 - Arithmetic assignment. */
+void utest::test7(){
 	const rational<int> one(1);
 	const rational<int> half(1, 2);
 	rational<int> r;
@@ -469,8 +478,8 @@ void test7(){
 
 }
 
-/** Test#8 - Arithmetic assignment invalid */
-void test8(){
+/** Test#8 - Arithmetic assignment invalid. */
+void utest::test8(){
 	const rational<int> zero;
 	rational<int> r;
 
@@ -485,8 +494,8 @@ void test8(){
 	}
 }
 
-/** Test#9 - Arithmetic assignment with int type */
-void test9(){
+/** Test#9 - Arithmetic assignment with int type. */
+void utest::test9(){
 	rational<int> r = 3;
 
 	r = 1; r += 1;
@@ -510,8 +519,8 @@ void test9(){
 	_assert(r.denominator() == 1);
 }
 
-/** Test#10 - Arithmetic assignment with int type invalid */
-void test10(){
+/** Test#10 - Arithmetic assignment with int type invalid. */
+void utest::test10(){
 	rational<int> r;
 
 	try{
@@ -525,8 +534,8 @@ void test10(){
 	}
 }
 
-/** Test#11 - Increment/decrement */
-void test11(){
+/** Test#11 - Increment/decrement. */
+void utest::test11(){
 	rational<int> r, s;
 
 	r = 1; s = ++r;
@@ -550,8 +559,8 @@ void test11(){
 	_assert(s != r);
 }
 
-/** Test#12 - Operator not */
-void test12(){
+/** Test#12 - Operator not. */
+void utest::test12(){
 	rational<int> r;
 
 	r = 0;
@@ -561,16 +570,16 @@ void test12(){
 	_assert(!!r);
 }
 
-/** Test#13 - Boolean conversion */
-void test13(){
+/** Test#13 - Boolean conversion. */
+void utest::test13(){
 	rational<int> r;
 
 	r = 1;
 	_assert(r);
 }
 
-/** Test#14 - Comparison operators */
-void test14(){
+/** Test#14 - Comparison operators. */
+void utest::test14(){
 	_assert(rational<int>() < rational<int>(1));
 	_assert(rational<int>(-1) < rational<int>());
 
@@ -587,8 +596,8 @@ void test14(){
 	_assert(rational<int>(-1) == -1);
 }
 
-/** Test#15 - Global unary operators */
-void test15(){
+/** Test#15 - Global unary operators. */
+void utest::test15(){
 	_assert( (+rational<int>(1, 2)).numerator() == 1);
 	_assert( (+rational<int>(1, 2)).denominator() == 2);
 
@@ -602,55 +611,68 @@ void test15(){
 	_assert( (-rational<int>(-1, 2)).denominator() == 2);
 }
 
-/** Test#16 - Global binary operators */
-void test16(){
+/** Test#16 - Global binary operators. */
+void utest::test16(){
 	const rational<int> zero;
 	const rational<int> half(1, 2);
 	const rational<int> one(1);
 	const rational<int> two(2);
+	const rational<int> minus_half(-1, 2);
 
 	_assert(half + half == one);
-	_assert(one - half == half);
-	_assert(two * half == one);
-	_assert(one / half == two);
-	_assert(zero / one == zero);
+	_assert(one  - half == half);
+	_assert(two  * half == one);
+	_assert(one  / half == two);
+	_assert(zero / one  == zero);
+
+	_assert(half + minus_half == zero);
+	_assert(half - minus_half == one);
+	_assert(one  * minus_half == minus_half);
+	_assert(one  / minus_half == -two);
+	_assert(zero / minus_half == zero);
 
 	_assert(zero + 1 == one);
-	_assert(one - 0 == one);
-	_assert(two * 1 == two);
-	_assert(two / 1 == two);
+	_assert(one  - 0 == one);
+	_assert(two  * 1 == two);
+	_assert(two  / 1 == two);
 	_assert(zero / 1 == zero);
+
+	_assert(zero + -1 == -one);
+	_assert(one  - -1 == two);
+	_assert(two  * -1 == -two);
+	_assert(two  / -1 == -two);
+	_assert(zero / -1 == zero);
 
 	_assert(1 + zero == one);
 	_assert(1 - zero == one);
-	_assert(2 * one == two);
-	_assert(2 / one == two);
-	_assert(0 / one == zero);
+	_assert(2 * one  == two);
+	_assert(2 / one  == two);
+	_assert(0 / one  == zero);
 
 	_assert(half + half == 1);
-	_assert(2 * half == one);
-	_assert(2 * half == 1);
-	_assert(one / half == 2);
-	_assert(1 / half == 2);
+	_assert(2 * half    == one);
+	_assert(2 * half    == 1);
+	_assert(one / half  == 2);
+	_assert(1 / half    == 2);
 }
 
-/** Test#17 - Absolute member function */
-void test17(){
+/** Test#17 - Absolute member function. */
+void utest::test17(){
 	const rational<int> half(1, 2);
 	const rational<int> minus_half(-1, 2);
 
 	_assert(abs(minus_half) == half);
 }
 
-/** Test#18 - Type conversion */
-void test18(){
+/** Test#18 - Type conversion. */
+void utest::test18(){
 	const rational<int> pi(22,7);
 
 	_assert((rational_cast<double>(pi) - 22.0/7.0) < 1e-6);
 }
 
-/** Test#19 - Sign handling */
-void test19(){
+/** Test#19 - Sign handling. */
+void utest::test19(){
 
 	const rational<int> half(1, 2);
 	const rational<int> minus_half(-1, 2);
@@ -659,8 +681,8 @@ void test19(){
 	_assert(abs(minus_half) == half);
 }
 
-/** Test#20 - Overflow */
-void test20(){
+/** Test#20 - Overflow. */
+void utest::test20(){
 	int maxint = (std::numeric_limits<int>::max)();
 	rational<int> big(maxint, 2);
 

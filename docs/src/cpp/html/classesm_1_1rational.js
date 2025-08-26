@@ -6,6 +6,10 @@ var classesm_1_1rational =
     [ "rational", "classesm_1_1rational.html#a092ebf95b666db1d05a5ca20fdd79928", null ],
     [ "assign", "classesm_1_1rational.html#a8b9f675d7054a3fffae00d145e986f4e", null ],
     [ "denominator", "classesm_1_1rational.html#a28e3c42d7f9c72bc5f718b40eda1b0bb", null ],
+    [ "inner_abs", "classesm_1_1rational.html#affc69302f995763f1366a551c4a0b1d9", null ],
+    [ "inner_gcd", "classesm_1_1rational.html#afe18702420bb8d52479c69bbbadc0f37", null ],
+    [ "is_normalized", "classesm_1_1rational.html#a83f331fc1adadbd54b233fcdf09b7a39", null ],
+    [ "normalize", "classesm_1_1rational.html#a9b8243c2a0271f974b3cf25f1b74ffcc", null ],
     [ "numerator", "classesm_1_1rational.html#adb0691aa95649156763ae78a702aed11", null ],
     [ "operator bool", "classesm_1_1rational.html#a716b2e889fc2f8e018649840f9d58826", null ],
     [ "operator!", "classesm_1_1rational.html#aa508274e6eea26493e0f22eee1db2ed4", null ],
@@ -29,5 +33,8 @@ var classesm_1_1rational =
     [ "operator==", "classesm_1_1rational.html#a8b6fa8bc4b609f0123e5380076bd2432", null ],
     [ "operator==", "classesm_1_1rational.html#a70ff8d5d99f57d108bcdd733c421ddc5", null ],
     [ "operator>", "classesm_1_1rational.html#a5d88cca6ec98c7545ea48eb59d3e60a3", null ],
-    [ "operator>", "classesm_1_1rational.html#a101cc287f90d4975c70681574adf4324", null ]
+    [ "operator>", "classesm_1_1rational.html#a101cc287f90d4975c70681574adf4324", null ],
+    [ "test_invariant", "classesm_1_1rational.html#a076648fde907faae8f7c8ef5e64b1087", null ],
+    [ "den", "classesm_1_1rational.html#aa6c65ee2ae2fca858ce34c193e8785dd", null ],
+    [ "num", "classesm_1_1rational.html#a0a80ddbb8e40f916df370a5d0fa89601", null ]
 ];

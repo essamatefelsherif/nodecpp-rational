@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['numerator_0',['numerator',['../classesm_1_1rational.html#adb0691aa95649156763ae78a702aed11',1,'esm::rational']]]
+  ['equalto_0',['EqualTo',['../classaddon_1_1WrappedRational.html#a5f4c280d675852ee68cdeff857fd42b5',1,'addon::WrappedRational']]]
 ];

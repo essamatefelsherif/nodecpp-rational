@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['init_0',['Init',['../classaddon_1_1WrappedRational.html#a2c6f3a371e548206e46e0a1e055a75a3',1,'addon::WrappedRational::Init()'],['../namespaceaddon.html#af01c545538ca20453b7d60c9a58a8fc3',1,'addon::Init()']]]
+  ['denominator_0',['denominator',['../classesm_1_1rational.html#a28e3c42d7f9c72bc5f718b40eda1b0bb',1,'esm::rational']]],
+  ['div_1',['Div',['../classaddon_1_1WrappedRational.html#ad16ca5d2bb36ff4a55c3f8b216b50359',1,'addon::WrappedRational']]]
 ];
