@@ -11,25 +11,24 @@ npm install [-g] @essamonline/nodecpp-rational
 ## Structure
 
 ```
-
 /nodecpp-rational
 	│
-	├── binding.gyp
-	├── demo
+	├── binding.gyp                 # binding file
+	├── demo                        # a package for demonstrating usage of the package
 	│   ├── index.js
 	│   ├── index.mjs
 	│   └── package.json
 	├── docs
-	│   ├── coverage
-	│   │   ├── cpp
+	│   ├── coverage                # coverage reports
+	│   │   ├── cpp                 # coverage reports for C++ code
 	│   │   │   ├── html
 	│   │   │   └── lcov.info
-	│   │   └── js
+	│   │   └── js                  # coverage reports for JavaScript code
 	│   │       ├── html
 	│   │       └── lcov.info
-	│   └── src
-	│       ├── cpp
-	│       └── js
+	│   └── src                     # source code documentation
+	│       ├── cpp                 # source code documentation using doxygen
+	│       └── js                  # source code documentation using jsdoc
 	├── include
 	│   └── rational.h
 	├── lib
