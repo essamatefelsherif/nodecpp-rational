@@ -2,11 +2,28 @@
 
 A Node.js native C++ addon that defines a JavaScript class **Rational** for representing and manipulating rational numbers.
 
+
 ## Installation
 
 ```
 npm install [-g] @essamonline/nodecpp-rational
 ```
+
+## Usage
+
+With CommonJS in JavaScript,
+
+```js
+const { Rational } = require('@essamonline/nodecpp-rational');
+```
+
+With ESM or TypeScript,
+
+```ts
+import addon from '@essamonline/nodecpp-rational';
+const { Rational } = addon;
+```
+
 
 ## Package Directory Structure
 
@@ -14,7 +31,7 @@ npm install [-g] @essamonline/nodecpp-rational
 /nodecpp-rational
  │
  ├── binding.gyp            # JSON-like configuration file used by node-gyp to build the addon
- ├── demo                   # a package for demonstrating usage
+ ├── demo                   # a package for demonstrating usage of 'nodecpp-rational' package
  │   ├── index.js
  │   ├── index.mjs
  │   └── package.json
@@ -35,16 +52,20 @@ npm install [-g] @essamonline/nodecpp-rational
  │   └── index.js
  ├── package.json
  ├── src
- │   ├── addon.cpp          # C++ code for registering the C++ addon within JS context
- │   ├── rational-addon.cpp # C++ code implementing the addon-generated JS class 'Rational'
- │   └── rational-addon.h   # C++ header that defines the addon-generated JS class 'Rational'
+ │   ├── addon.cpp          # C++ code for registering the C++ addon within v8 context
+ │   ├── rational-addon.cpp # C++ code implementing the addon-generated class 'Rational'
+ │   └── rational-addon.h   # C++ header that defines the addon-generated class 'Rational'
  └── test
-     ├── makefile
-     ├── rational.module.js # JavaScript module that defines a 'Rational' class to emulate the addon
-     ├── rational.test.cpp  # C++ code for testing the 'rational' template class defined by rational.h
-     └── rational.test.js   # JavaScript module for testing the C++ addon againt the emulating JS module
+     ├── makefile           # makefile for building and documenting the 'rational.test.cpp' 
+     ├── rational.module.js # JS module that defines a 'Rational' class to emulate the C++ addon
+     ├── rational.test.cpp  # C++ code for testing the 'rational' class defined by rational.h
+     └── rational.test.js   # JS module for testing the C++ addon againt the emulating JS module
 
 ```
+
+## Documentation
+
+Source code documentation, along with test coverage reports for JavaScript and C++ addon code are all included under [Documentation](https://essamatefelsherif.github.io/nodecpp-rational/docs).
 
 
 ## License
