@@ -29,54 +29,55 @@ const { Rational } = addon;
 ```js
 class Rational{
 	/*** Static Methods [1] ***/
-	static gcd(a, b)
+	static gcd(a, b)         // returns the greatest common divisor of two integers
 
 	/*** Constructor ***/
-	constructor(arg1, arg2)
+	constructor(arg1, arg2)  // constructor with no arguments, one rational object argument
+                             // or 2 numeric arguments i.e. numerator and denominator
 
 	/*** Helper Instance Methods [2] ***/
-	_validate(arg)
-	_normalize()
+	_validate(arg)           // validates the given argument as a numerator or denominator
+	_normalize()             // normalizes the rational number i.e. no common factors and positive denominator
 
 	/*** Accessors Instance Methods [2] ***/
-	getNumerator()
-	getDenominator()
+	getNumerator()           // an accessor function to return the numerator
+	getDenominator()         // an accessor function to return the denominator
 
 	/*** Operations Instance Methods [27] ***/
-	assign(arg1, arg2)
+	assign(arg1, arg2)       // assignment to 'this' Rational object.
 
-	selfAdd(arg)
-	selfSub(arg)
-	selfMul(arg)
-	selfDiv(arg)
-	selfPow(arg)
+	selfAdd(arg)             // adds to 'this' Rational object another Rational object or an integer
+	selfSub(arg)             // subtracts 'this' Rational object another Rational object or an integer
+	selfMul(arg)             // multiplies 'this' Rational object by another Rational object or an integer
+	selfDiv(arg)             // divides 'this' Rational object by another Rational object or an integer
+	selfPow(arg)             // raise 'this' Rational object to the power given
 
-	add(arg)
-	sub(arg)
-	mul(arg)
-	div(arg)
-	pow(arg)
+	add(arg)                 // returns new Rational object without affecting 'this' Rational object
+	sub(arg)                 // returns new Rational object without affecting 'this' Rational object
+	mul(arg)                 // returns new Rational object without affecting 'this' Rational object
+	div(arg)                 // returns new Rational object without affecting 'this' Rational object
+	pow(arg)                 // returns new Rational object without affecting 'this' Rational object
 
-	preInc()
-	preDec()
-	postInc()
-	postDec()
+	preInc()                 // increments 'this' Rational object and returns it
+	preDec()                 // decrements 'this' Rational object and returns it
+	postInc()                // increments 'this' Rational object and returns copy before increment
+	postDec()                // increments 'this' Rational object and returns copy before decrement
 
-	selfAbs()
-	selfNeg()
+	selfAbs()                // set 'this' Rational object to its absolute value
+	selfNeg()                // negate 'this' Rational object to its absolute value
 
-	abs()
-	neg()
-	not()
-	bool()
+	abs()                    // returns absolute copy of 'this' Rational object
+	neg()                    // returns negated copy of 'this' Rational object
+	not()                    // returns true for zero rationals and false otherwise
+	bool()                   // returns true for non-zero rationals and false otherwise
 	
-	lessThan(arg)
-	greaterThan(arg)
-	equalTo(arg)
-	notEqualTo(arg)
+	lessThan(arg)            // comparison with a given Rational object or a number
+	greaterThan(arg)         // comparison with a given Rational object or a number
+	equalTo(arg)             // comparison with a given Rational object or a number
+	notEqualTo(arg)          // comparison with a given Rational object or a number
 
-	valueOf()
-	toString()
+	valueOf()                // returns the real numeric value of 'this' Rational object
+	toString()               // returns a string representation of 'this' Rational object
 }
 ```
 

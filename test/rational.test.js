@@ -1,6 +1,6 @@
 /**
  * @module  rational-test
- * @desc    A test module for testing the rational C++ addon and the emulating JavaScript module.
+ * @desc    A module for testing the C++ addon-generated Rational class against the emulating JavaScript Rational class.
  * @version 1.0.0
  * @author  Essam A. El-Sherif
  */

@@ -1,6 +1,6 @@
 /**
  * @module  rational-module
- * @desc    A module that defines a Rational class for representing and manipulating rational numbers.
+ * @desc    A module that defines a Rational class to emulate the addon-generated Rational class.
  * @version 1.0.0
  * @author  Essam A. El-Sherif
  */

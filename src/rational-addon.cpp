@@ -28,8 +28,7 @@ namespace addon{
 	Persistent<Function> WrappedRational::constructor;
 
 	/**
-	 *
-	 *
+	 * Throws an exception
 	 */
 	inline void throwException(Isolate *isolate, Local<Value>(*func)(Local<String>), const char* msg){
 		isolate->ThrowException(
