@@ -80,6 +80,12 @@ void addon::WrappedRational::Init(Local<Object> exports){
 
 	NODE_SET_PROTOTYPE_METHOD(tpl, "assign",   Assign);
 
+	NODE_SET_PROTOTYPE_METHOD(tpl, "selfAdd", SelfAdd);
+	NODE_SET_PROTOTYPE_METHOD(tpl, "selfSub", SelfSub);
+	NODE_SET_PROTOTYPE_METHOD(tpl, "selfMul", SelfMul);
+	NODE_SET_PROTOTYPE_METHOD(tpl, "selfDiv", SelfDiv);
+	NODE_SET_PROTOTYPE_METHOD(tpl, "selfPow", SelfPow);
+
 	NODE_SET_PROTOTYPE_METHOD(tpl, "add", Add);
 	NODE_SET_PROTOTYPE_METHOD(tpl, "sub", Sub);
 	NODE_SET_PROTOTYPE_METHOD(tpl, "mul", Mul);
@@ -91,8 +97,12 @@ void addon::WrappedRational::Init(Local<Object> exports){
 	NODE_SET_PROTOTYPE_METHOD(tpl, "postInc", PostInc);
 	NODE_SET_PROTOTYPE_METHOD(tpl, "postDec", PostDec);
 
-	NODE_SET_PROTOTYPE_METHOD(tpl, "neg",  Neg);
-	NODE_SET_PROTOTYPE_METHOD(tpl, "abs",  Abs);
+	NODE_SET_PROTOTYPE_METHOD(tpl, "selfNeg", SelfNeg);
+	NODE_SET_PROTOTYPE_METHOD(tpl, "selfAbs", SelfAbs);
+
+	NODE_SET_PROTOTYPE_METHOD(tpl, "neg", Neg);
+	NODE_SET_PROTOTYPE_METHOD(tpl, "abs", Abs);
+
 	NODE_SET_PROTOTYPE_METHOD(tpl, "not",  Not);
 	NODE_SET_PROTOTYPE_METHOD(tpl, "bool", Bool);
 
@@ -580,7 +590,7 @@ void addon::WrappedRational::Assign(const FunctionCallbackInfo<Value>& args){
 	}
 }
 
-void addon::WrappedRational::Add(const FunctionCallbackInfo<Value>& args){
+void addon::WrappedRational::SelfAdd(const FunctionCallbackInfo<Value>& args){
 
 	/* Pointer to v8::Isolate object that represents the v8 instance itself. */
 	Isolate *isolate = args.GetIsolate();
@@ -617,7 +627,7 @@ void addon::WrappedRational::Add(const FunctionCallbackInfo<Value>& args){
 				long n = numObj.As<Number>()->Value();
 				long d = denObj.As<Number>()->Value();
 
-				esm::rational<long> rational(n, d);
+				src::rational<long> rational(n, d);
 				ptrWrappedRational->ptrRational->operator +=(rational);
 			}
 			else
@@ -632,7 +642,7 @@ void addon::WrappedRational::Add(const FunctionCallbackInfo<Value>& args){
 				long n = value;
 				long d = 1L;
 
-				esm::rational<long> rational(n, d);
+				src::rational<long> rational(n, d);
 				ptrWrappedRational->ptrRational->operator +=(rational);
 			}
 			else
@@ -655,7 +665,7 @@ void addon::WrappedRational::Add(const FunctionCallbackInfo<Value>& args){
 				long n = value;
 				long d = 1L;
 
-				esm::rational<long> rational(n, d);
+				src::rational<long> rational(n, d);
 				ptrWrappedRational->ptrRational->operator +=(rational);
 			}
 			else{
@@ -670,6 +680,478 @@ void addon::WrappedRational::Add(const FunctionCallbackInfo<Value>& args){
 	}
 
 	args.GetReturnValue().Set(args.This());
+}
+
+void addon::WrappedRational::SelfSub(const FunctionCallbackInfo<Value>& args){
+
+	/* Pointer to v8::Isolate object that represents the v8 instance itself. */
+	Isolate *isolate = args.GetIsolate();
+
+	/* Context of the currently running JavaScript instance. */
+	Local<Context> context = isolate->GetCurrentContext();
+
+	WrappedRational *ptrWrappedRational = ObjectWrap::Unwrap<WrappedRational>(args.Holder());
+
+	switch(args.Length()){
+		case 1:
+			if(args[0]->IsObject()){
+
+				Local<String> constructor = args[0].As<Object>()->GetConstructorName();
+				String::Utf8Value str(isolate, constructor);
+
+				if(std::strcmp(*str, "Rational")){
+					throwException(isolate, Exception::TypeError, "Rational: invalid argument");
+					return;
+				}
+
+				Local<Value> numObj = args[0].As<Object>()->Get(
+					context,
+					String::NewFromUtf8(
+						isolate, "num").ToLocalChecked()
+					).ToLocalChecked(); /* Converts this MaybeLocal<> to a Local<>. */
+
+				Local<Value> denObj = args[0].As<Object>()->Get(
+					context,
+					String::NewFromUtf8(
+						isolate, "den").ToLocalChecked()
+					).ToLocalChecked(); /* Converts this MaybeLocal<> to a Local<>. */
+
+				long n = numObj.As<Number>()->Value();
+				long d = denObj.As<Number>()->Value();
+
+				src::rational<long> rational(n, d);
+				ptrWrappedRational->ptrRational->operator -=(rational);
+			}
+			else
+			if(args[0]->IsNumber()){
+
+				double value = args[0].As<Number>()->Value();
+				if(std::isnan(value)){
+					throwException(isolate, Exception::TypeError, "Rational: invalid argument");
+					return;
+				}
+
+				long n = value;
+				long d = 1L;
+
+				src::rational<long> rational(n, d);
+				ptrWrappedRational->ptrRational->operator -=(rational);
+			}
+			else
+			if(args[0]->IsBigInt()){
+				throwException(isolate, Exception::TypeError, "Rational: BigInt type is not accepted");
+				return;
+			}
+			else
+			if(args[0]->IsString()){
+
+				String::Utf8Value str(isolate, args[0]);
+				char *end = NULL;
+
+				double value = std::strtol(*str, &end, 10);
+				if(*str == end || std::isnan(value)){
+					throwException(isolate, Exception::TypeError, "Rational: invalid argument");
+					return;
+				}
+
+				long n = value;
+				long d = 1L;
+
+				src::rational<long> rational(n, d);
+				ptrWrappedRational->ptrRational->operator -=(rational);
+			}
+			else{
+				throwException(isolate, Exception::TypeError, "Rational: invalid argument");
+				return;
+			}
+		break;
+
+		default:
+			throwException(isolate, Exception::TypeError, "Rational: invalid number of arguments");
+			return;
+	}
+
+	args.GetReturnValue().Set(args.This());
+}
+
+void addon::WrappedRational::SelfMul(const FunctionCallbackInfo<Value>& args){
+
+	/* Pointer to v8::Isolate object that represents the v8 instance itself. */
+	Isolate *isolate = args.GetIsolate();
+
+	/* Context of the currently running JavaScript instance. */
+	Local<Context> context = isolate->GetCurrentContext();
+
+	WrappedRational *ptrWrappedRational = ObjectWrap::Unwrap<WrappedRational>(args.Holder());
+
+	switch(args.Length()){
+		case 1:
+			if(args[0]->IsObject()){
+
+				Local<String> constructor = args[0].As<Object>()->GetConstructorName();
+				String::Utf8Value str(isolate, constructor);
+
+				if(std::strcmp(*str, "Rational")){
+					throwException(isolate, Exception::TypeError, "Rational: invalid argument");
+					return;
+				}
+
+				Local<Value> numObj = args[0].As<Object>()->Get(
+					context,
+					String::NewFromUtf8(
+						isolate, "num").ToLocalChecked()
+					).ToLocalChecked(); /* Converts this MaybeLocal<> to a Local<>. */
+
+				Local<Value> denObj = args[0].As<Object>()->Get(
+					context,
+					String::NewFromUtf8(
+						isolate, "den").ToLocalChecked()
+					).ToLocalChecked(); /* Converts this MaybeLocal<> to a Local<>. */
+
+				long n = numObj.As<Number>()->Value();
+				long d = denObj.As<Number>()->Value();
+
+				src::rational<long> rational(n, d);
+				ptrWrappedRational->ptrRational->operator *=(rational);
+			}
+			else
+			if(args[0]->IsNumber()){
+
+				double value = args[0].As<Number>()->Value();
+				if(std::isnan(value)){
+					throwException(isolate, Exception::TypeError, "Rational: invalid argument");
+					return;
+				}
+
+				long n = value;
+				long d = 1L;
+
+				src::rational<long> rational(n, d);
+				ptrWrappedRational->ptrRational->operator *=(rational);
+			}
+			else
+			if(args[0]->IsBigInt()){
+				throwException(isolate, Exception::TypeError, "Rational: BigInt type is not accepted");
+				return;
+			}
+			else
+			if(args[0]->IsString()){
+
+				String::Utf8Value str(isolate, args[0]);
+				char *end = NULL;
+
+				double value = std::strtol(*str, &end, 10);
+				if(*str == end || std::isnan(value)){
+					throwException(isolate, Exception::TypeError, "Rational: invalid argument");
+					return;
+				}
+
+				long n = value;
+				long d = 1L;
+
+				src::rational<long> rational(n, d);
+				ptrWrappedRational->ptrRational->operator *=(rational);
+			}
+			else{
+				throwException(isolate, Exception::TypeError, "Rational: invalid argument");
+				return;
+			}
+		break;
+
+		default:
+			throwException(isolate, Exception::TypeError, "Rational: invalid number of arguments");
+			return;
+	}
+
+	args.GetReturnValue().Set(args.This());
+}
+
+void addon::WrappedRational::SelfDiv(const FunctionCallbackInfo<Value>& args){
+
+	/* Pointer to v8::Isolate object that represents the v8 instance itself. */
+	Isolate *isolate = args.GetIsolate();
+
+	/* Context of the currently running JavaScript instance. */
+	Local<Context> context = isolate->GetCurrentContext();
+
+	WrappedRational *ptrWrappedRational = ObjectWrap::Unwrap<WrappedRational>(args.Holder());
+
+	switch(args.Length()){
+		case 1:
+			if(args[0]->IsObject()){
+
+				Local<String> constructor = args[0].As<Object>()->GetConstructorName();
+				String::Utf8Value str(isolate, constructor);
+
+				if(std::strcmp(*str, "Rational")){
+					throwException(isolate, Exception::TypeError, "Rational: invalid argument");
+					return;
+				}
+
+				Local<Value> numObj = args[0].As<Object>()->Get(
+					context,
+					String::NewFromUtf8(
+						isolate, "num").ToLocalChecked()
+					).ToLocalChecked(); /* Converts this MaybeLocal<> to a Local<>. */
+
+				Local<Value> denObj = args[0].As<Object>()->Get(
+					context,
+					String::NewFromUtf8(
+						isolate, "den").ToLocalChecked()
+					).ToLocalChecked(); /* Converts this MaybeLocal<> to a Local<>. */
+
+				long n = numObj.As<Number>()->Value();
+				long d = denObj.As<Number>()->Value();
+
+				if(n == 0){
+					throwException(isolate, Exception::TypeError, "Rational: division by zero");
+					return;
+				}
+
+				src::rational<long> rational(n, d);
+				ptrWrappedRational->ptrRational->operator /=(rational);
+			}
+			else
+			if(args[0]->IsNumber()){
+
+				double value = args[0].As<Number>()->Value();
+				if(std::isnan(value)){
+					throwException(isolate, Exception::TypeError, "Rational: invalid argument");
+					return;
+				}
+
+				long n = value;
+				long d = 1L;
+
+				if(n == 0){
+					throwException(isolate, Exception::TypeError, "Rational: division by zero");
+					return;
+				}
+
+				src::rational<long> rational(n, d);
+				ptrWrappedRational->ptrRational->operator /=(rational);
+			}
+			else
+			if(args[0]->IsBigInt()){
+				throwException(isolate, Exception::TypeError, "Rational: BigInt type is not accepted");
+				return;
+			}
+			else
+			if(args[0]->IsString()){
+
+				String::Utf8Value str(isolate, args[0]);
+				char *end = NULL;
+
+				double value = std::strtol(*str, &end, 10);
+				if(*str == end || std::isnan(value)){
+					throwException(isolate, Exception::TypeError, "Rational: invalid argument");
+					return;
+				}
+
+				long n = value;
+				long d = 1L;
+
+				if(n == 0){
+					throwException(isolate, Exception::TypeError, "Rational: division by zero");
+					return;
+				}
+
+				src::rational<long> rational(n, d);
+				ptrWrappedRational->ptrRational->operator /=(rational);
+			}
+			else{
+				throwException(isolate, Exception::TypeError, "Rational: invalid argument");
+				return;
+			}
+		break;
+
+		default:
+			throwException(isolate, Exception::TypeError, "Rational: invalid number of arguments");
+			return;
+	}
+
+	args.GetReturnValue().Set(args.This());
+}
+
+void addon::WrappedRational::SelfPow(const FunctionCallbackInfo<Value>& args){
+
+	/* Pointer to v8::Isolate object that represents the v8 instance itself. */
+	Isolate *isolate = args.GetIsolate();
+
+	WrappedRational *ptrWrappedRational = ObjectWrap::Unwrap<WrappedRational>(args.Holder());
+
+	switch(args.Length()){
+		case 1:
+			if(args[0]->IsNumber()){
+
+				double value = args[0].As<Number>()->Value();
+				if(std::isnan(value)){
+					throwException(isolate, Exception::TypeError, "Rational: invalid argument");
+					return;
+				}
+
+				long n = value;
+
+				src::rational<long> r(1);
+				for(long i = 0; i < std::abs(n); i++)
+					r *= *(ptrWrappedRational->ptrRational);
+
+				if(n < 1){
+					if(r.numerator() == 0){
+						throwException(isolate, Exception::TypeError, "Rational: division by zero");
+						return;
+					}
+					src::rational<long> u(1);
+					u /= r;
+					r.assign(u.numerator(), u.denominator());
+				}
+
+				ptrWrappedRational->ptrRational->assign(r.numerator(), r.denominator());
+			}
+			else
+			if(args[0]->IsBigInt()){
+				throwException(isolate, Exception::TypeError, "Rational: BigInt type is not accepted");
+				return;
+			}
+			else
+			if(args[0]->IsString()){
+
+				String::Utf8Value str(isolate, args[0]);
+				char *end = NULL;
+
+				double value = std::strtol(*str, &end, 10);
+				if(*str == end || std::isnan(value)){
+					throwException(isolate, Exception::TypeError, "Rational: invalid argument");
+					return;
+				}
+
+				long n = value;
+
+				src::rational<long> r(1);
+				for(long i = 0; i < std::abs(n); i++)
+					r *= *(ptrWrappedRational->ptrRational);
+
+				if(n < 1){
+					if(r.numerator() == 0){
+						throwException(isolate, Exception::TypeError, "Rational: division by zero");
+						return;
+					}
+					src::rational<long> u(1);
+					u /= r;
+					r.assign(u.numerator(), u.denominator());
+				}
+
+				ptrWrappedRational->ptrRational->assign(r.numerator(), r.denominator());
+			}
+			else{
+				throwException(isolate, Exception::TypeError, "Rational: invalid argument");
+				return;
+			}
+		break;
+
+		default:
+			throwException(isolate, Exception::TypeError, "Rational: invalid number of arguments");
+			return;
+	}
+
+	args.GetReturnValue().Set(args.This());
+}
+
+void addon::WrappedRational::Add(const FunctionCallbackInfo<Value>& args){
+
+	/* Pointer to v8::Isolate object that represents the v8 instance itself. */
+	Isolate *isolate = args.GetIsolate();
+
+	/* Context of the currently running JavaScript instance. */
+	Local<Context> context = isolate->GetCurrentContext();
+
+	WrappedRational *ptrWrappedRational = ObjectWrap::Unwrap<WrappedRational>(args.Holder());
+	long n, d;
+
+	switch(args.Length()){
+		case 1:
+			if(args[0]->IsObject()){
+
+				Local<String> constructor = args[0].As<Object>()->GetConstructorName();
+				String::Utf8Value str(isolate, constructor);
+
+				if(std::strcmp(*str, "Rational")){
+					throwException(isolate, Exception::TypeError, "Rational: invalid argument");
+					return;
+				}
+
+				Local<Value> numObj = args[0].As<Object>()->Get(
+					context,
+					String::NewFromUtf8(
+						isolate, "num").ToLocalChecked()
+					).ToLocalChecked(); /* Converts this MaybeLocal<> to a Local<>. */
+
+				Local<Value> denObj = args[0].As<Object>()->Get(
+					context,
+					String::NewFromUtf8(
+						isolate, "den").ToLocalChecked()
+					).ToLocalChecked(); /* Converts this MaybeLocal<> to a Local<>. */
+
+				n = numObj.As<Number>()->Value();
+				d = denObj.As<Number>()->Value();
+			}
+			else
+			if(args[0]->IsNumber()){
+
+				double value = args[0].As<Number>()->Value();
+				if(std::isnan(value)){
+					throwException(isolate, Exception::TypeError, "Rational: invalid argument");
+					return;
+				}
+
+				n = value;
+				d = 1L;
+			}
+			else
+			if(args[0]->IsBigInt()){
+				throwException(isolate, Exception::TypeError, "Rational: BigInt type is not accepted");
+				return;
+			}
+			else
+			if(args[0]->IsString()){
+
+				String::Utf8Value str(isolate, args[0]);
+				char *end = NULL;
+
+				double value = std::strtol(*str, &end, 10);
+				if(*str == end || std::isnan(value)){
+					throwException(isolate, Exception::TypeError, "Rational: invalid argument");
+					return;
+				}
+
+				n = value;
+				d = 1L;
+			}
+			else{
+				throwException(isolate, Exception::TypeError, "Rational: invalid argument");
+				return;
+			}
+		break;
+
+		default:
+			throwException(isolate, Exception::TypeError, "Rational: invalid number of arguments");
+			return;
+	}
+
+	src::rational<long> rational(n, d);
+	src::rational<long> retRational = src::operator+(*(ptrWrappedRational->ptrRational), rational);
+
+	Local<Function> cons = Local<Function>::New(isolate, constructor);
+	int argc = 2;
+	Local<Value> argv[] = {
+		Number::New(isolate, retRational.numerator()),
+		Number::New(isolate, retRational.denominator())
+	};
+
+	args.GetReturnValue()
+		.Set(cons->NewInstance(context, argc, argv)
+		.ToLocalChecked()
+	);
 }
 
 void addon::WrappedRational::Sub(const FunctionCallbackInfo<Value>& args){
@@ -681,6 +1163,7 @@ void addon::WrappedRational::Sub(const FunctionCallbackInfo<Value>& args){
 	Local<Context> context = isolate->GetCurrentContext();
 
 	WrappedRational *ptrWrappedRational = ObjectWrap::Unwrap<WrappedRational>(args.Holder());
+	long n, d;
 
 	switch(args.Length()){
 		case 1:
@@ -706,11 +1189,8 @@ void addon::WrappedRational::Sub(const FunctionCallbackInfo<Value>& args){
 						isolate, "den").ToLocalChecked()
 					).ToLocalChecked(); /* Converts this MaybeLocal<> to a Local<>. */
 
-				long n = numObj.As<Number>()->Value();
-				long d = denObj.As<Number>()->Value();
-
-				esm::rational<long> rational(n, d);
-				ptrWrappedRational->ptrRational->operator -=(rational);
+				n = numObj.As<Number>()->Value();
+				d = denObj.As<Number>()->Value();
 			}
 			else
 			if(args[0]->IsNumber()){
@@ -721,11 +1201,8 @@ void addon::WrappedRational::Sub(const FunctionCallbackInfo<Value>& args){
 					return;
 				}
 
-				long n = value;
-				long d = 1L;
-
-				esm::rational<long> rational(n, d);
-				ptrWrappedRational->ptrRational->operator -=(rational);
+				n = value;
+				d = 1L;
 			}
 			else
 			if(args[0]->IsBigInt()){
@@ -744,11 +1221,8 @@ void addon::WrappedRational::Sub(const FunctionCallbackInfo<Value>& args){
 					return;
 				}
 
-				long n = value;
-				long d = 1L;
-
-				esm::rational<long> rational(n, d);
-				ptrWrappedRational->ptrRational->operator -=(rational);
+				n = value;
+				d = 1L;
 			}
 			else{
 				throwException(isolate, Exception::TypeError, "Rational: invalid argument");
@@ -761,7 +1235,20 @@ void addon::WrappedRational::Sub(const FunctionCallbackInfo<Value>& args){
 			return;
 	}
 
-	args.GetReturnValue().Set(args.This());
+	src::rational<long> rational(n, d);
+	src::rational<long> retRational = src::operator-(*(ptrWrappedRational->ptrRational), rational);
+
+	Local<Function> cons = Local<Function>::New(isolate, constructor);
+	int argc = 2;
+	Local<Value> argv[] = {
+		Number::New(isolate, retRational.numerator()),
+		Number::New(isolate, retRational.denominator())
+	};
+
+	args.GetReturnValue()
+		.Set(cons->NewInstance(context, argc, argv)
+		.ToLocalChecked()
+	);
 }
 
 void addon::WrappedRational::Mul(const FunctionCallbackInfo<Value>& args){
@@ -773,6 +1260,7 @@ void addon::WrappedRational::Mul(const FunctionCallbackInfo<Value>& args){
 	Local<Context> context = isolate->GetCurrentContext();
 
 	WrappedRational *ptrWrappedRational = ObjectWrap::Unwrap<WrappedRational>(args.Holder());
+	long n, d;
 
 	switch(args.Length()){
 		case 1:
@@ -798,11 +1286,8 @@ void addon::WrappedRational::Mul(const FunctionCallbackInfo<Value>& args){
 						isolate, "den").ToLocalChecked()
 					).ToLocalChecked(); /* Converts this MaybeLocal<> to a Local<>. */
 
-				long n = numObj.As<Number>()->Value();
-				long d = denObj.As<Number>()->Value();
-
-				esm::rational<long> rational(n, d);
-				ptrWrappedRational->ptrRational->operator *=(rational);
+				n = numObj.As<Number>()->Value();
+				d = denObj.As<Number>()->Value();
 			}
 			else
 			if(args[0]->IsNumber()){
@@ -813,11 +1298,8 @@ void addon::WrappedRational::Mul(const FunctionCallbackInfo<Value>& args){
 					return;
 				}
 
-				long n = value;
-				long d = 1L;
-
-				esm::rational<long> rational(n, d);
-				ptrWrappedRational->ptrRational->operator *=(rational);
+				n = value;
+				d = 1L;
 			}
 			else
 			if(args[0]->IsBigInt()){
@@ -836,11 +1318,8 @@ void addon::WrappedRational::Mul(const FunctionCallbackInfo<Value>& args){
 					return;
 				}
 
-				long n = value;
-				long d = 1L;
-
-				esm::rational<long> rational(n, d);
-				ptrWrappedRational->ptrRational->operator *=(rational);
+				n = value;
+				d = 1L;
 			}
 			else{
 				throwException(isolate, Exception::TypeError, "Rational: invalid argument");
@@ -853,7 +1332,20 @@ void addon::WrappedRational::Mul(const FunctionCallbackInfo<Value>& args){
 			return;
 	}
 
-	args.GetReturnValue().Set(args.This());
+	src::rational<long> rational(n, d);
+	src::rational<long> retRational = src::operator*(*(ptrWrappedRational->ptrRational), rational);
+
+	Local<Function> cons = Local<Function>::New(isolate, constructor);
+	int argc = 2;
+	Local<Value> argv[] = {
+		Number::New(isolate, retRational.numerator()),
+		Number::New(isolate, retRational.denominator())
+	};
+
+	args.GetReturnValue()
+		.Set(cons->NewInstance(context, argc, argv)
+		.ToLocalChecked()
+	);
 }
 
 void addon::WrappedRational::Div(const FunctionCallbackInfo<Value>& args){
@@ -865,6 +1357,7 @@ void addon::WrappedRational::Div(const FunctionCallbackInfo<Value>& args){
 	Local<Context> context = isolate->GetCurrentContext();
 
 	WrappedRational *ptrWrappedRational = ObjectWrap::Unwrap<WrappedRational>(args.Holder());
+	long n, d;
 
 	switch(args.Length()){
 		case 1:
@@ -890,16 +1383,13 @@ void addon::WrappedRational::Div(const FunctionCallbackInfo<Value>& args){
 						isolate, "den").ToLocalChecked()
 					).ToLocalChecked(); /* Converts this MaybeLocal<> to a Local<>. */
 
-				long n = numObj.As<Number>()->Value();
-				long d = denObj.As<Number>()->Value();
+				n = numObj.As<Number>()->Value();
+				d = denObj.As<Number>()->Value();
 
 				if(n == 0){
 					throwException(isolate, Exception::TypeError, "Rational: division by zero");
 					return;
 				}
-
-				esm::rational<long> rational(n, d);
-				ptrWrappedRational->ptrRational->operator /=(rational);
 			}
 			else
 			if(args[0]->IsNumber()){
@@ -910,16 +1400,13 @@ void addon::WrappedRational::Div(const FunctionCallbackInfo<Value>& args){
 					return;
 				}
 
-				long n = value;
-				long d = 1L;
+				n = value;
+				d = 1L;
 
 				if(n == 0){
 					throwException(isolate, Exception::TypeError, "Rational: division by zero");
 					return;
 				}
-
-				esm::rational<long> rational(n, d);
-				ptrWrappedRational->ptrRational->operator /=(rational);
 			}
 			else
 			if(args[0]->IsBigInt()){
@@ -938,16 +1425,13 @@ void addon::WrappedRational::Div(const FunctionCallbackInfo<Value>& args){
 					return;
 				}
 
-				long n = value;
-				long d = 1L;
+				n = value;
+				d = 1L;
 
 				if(n == 0){
 					throwException(isolate, Exception::TypeError, "Rational: division by zero");
 					return;
 				}
-
-				esm::rational<long> rational(n, d);
-				ptrWrappedRational->ptrRational->operator /=(rational);
 			}
 			else{
 				throwException(isolate, Exception::TypeError, "Rational: invalid argument");
@@ -960,7 +1444,20 @@ void addon::WrappedRational::Div(const FunctionCallbackInfo<Value>& args){
 			return;
 	}
 
-	args.GetReturnValue().Set(args.This());
+	src::rational<long> rational(n, d);
+	src::rational<long> retRational = src::operator/(*(ptrWrappedRational->ptrRational), rational);
+
+	Local<Function> cons = Local<Function>::New(isolate, constructor);
+	int argc = 2;
+	Local<Value> argv[] = {
+		Number::New(isolate, retRational.numerator()),
+		Number::New(isolate, retRational.denominator())
+	};
+
+	args.GetReturnValue()
+		.Set(cons->NewInstance(context, argc, argv)
+		.ToLocalChecked()
+	);
 }
 
 void addon::WrappedRational::Pow(const FunctionCallbackInfo<Value>& args){
@@ -968,7 +1465,11 @@ void addon::WrappedRational::Pow(const FunctionCallbackInfo<Value>& args){
 	/* Pointer to v8::Isolate object that represents the v8 instance itself. */
 	Isolate *isolate = args.GetIsolate();
 
+	/* Context of the currently running JavaScript instance. */
+	Local<Context> context = isolate->GetCurrentContext();
+
 	WrappedRational *ptrWrappedRational = ObjectWrap::Unwrap<WrappedRational>(args.Holder());
+	src::rational<long> r(1);
 
 	switch(args.Length()){
 		case 1:
@@ -981,8 +1482,6 @@ void addon::WrappedRational::Pow(const FunctionCallbackInfo<Value>& args){
 				}
 
 				long n = value;
-
-				esm::rational<long> r(1);
 				for(long i = 0; i < std::abs(n); i++)
 					r *= *(ptrWrappedRational->ptrRational);
 
@@ -991,12 +1490,10 @@ void addon::WrappedRational::Pow(const FunctionCallbackInfo<Value>& args){
 						throwException(isolate, Exception::TypeError, "Rational: division by zero");
 						return;
 					}
-					esm::rational<long> u(1);
+					src::rational<long> u(1);
 					u /= r;
 					r.assign(u.numerator(), u.denominator());
 				}
-
-				ptrWrappedRational->ptrRational->assign(r.numerator(), r.denominator());
 			}
 			else
 			if(args[0]->IsBigInt()){
@@ -1016,8 +1513,6 @@ void addon::WrappedRational::Pow(const FunctionCallbackInfo<Value>& args){
 				}
 
 				long n = value;
-
-				esm::rational<long> r(1);
 				for(long i = 0; i < std::abs(n); i++)
 					r *= *(ptrWrappedRational->ptrRational);
 
@@ -1026,12 +1521,10 @@ void addon::WrappedRational::Pow(const FunctionCallbackInfo<Value>& args){
 						throwException(isolate, Exception::TypeError, "Rational: division by zero");
 						return;
 					}
-					esm::rational<long> u(1);
+					src::rational<long> u(1);
 					u /= r;
 					r.assign(u.numerator(), u.denominator());
 				}
-
-				ptrWrappedRational->ptrRational->assign(r.numerator(), r.denominator());
 			}
 			else{
 				throwException(isolate, Exception::TypeError, "Rational: invalid argument");
@@ -1044,7 +1537,17 @@ void addon::WrappedRational::Pow(const FunctionCallbackInfo<Value>& args){
 			return;
 	}
 
-	args.GetReturnValue().Set(args.This());
+	Local<Function> cons = Local<Function>::New(isolate, constructor);
+	int argc = 2;
+	Local<Value> argv[] = {
+		Number::New(isolate, r.numerator()),
+		Number::New(isolate, r.denominator())
+	};
+
+	args.GetReturnValue()
+		.Set(cons->NewInstance(context, argc, argv)
+		.ToLocalChecked()
+	);
 }
 
 void addon::WrappedRational::PreInc(const FunctionCallbackInfo<Value>& args){
@@ -1139,7 +1642,7 @@ void addon::WrappedRational::PostDec(const FunctionCallbackInfo<Value>& args){
 		);
 }
 
-void addon::WrappedRational::Neg(const FunctionCallbackInfo<Value>& args){
+void addon::WrappedRational::SelfNeg(const FunctionCallbackInfo<Value>& args){
 
 	WrappedRational *ptrWrappedRational = ObjectWrap::Unwrap<WrappedRational>(args.Holder());
 
@@ -1154,7 +1657,7 @@ void addon::WrappedRational::Neg(const FunctionCallbackInfo<Value>& args){
 	args.GetReturnValue().Set(args.This());
 }
 
-void addon::WrappedRational::Abs(const FunctionCallbackInfo<Value>& args){
+void addon::WrappedRational::SelfAbs(const FunctionCallbackInfo<Value>& args){
 
 	WrappedRational *ptrWrappedRational = ObjectWrap::Unwrap<WrappedRational>(args.Holder());
 
@@ -1168,6 +1671,68 @@ void addon::WrappedRational::Abs(const FunctionCallbackInfo<Value>& args){
 		*ptrWrappedRational->ptrRational *= -1;
 
 	args.GetReturnValue().Set(args.This());
+}
+
+void addon::WrappedRational::Neg(const FunctionCallbackInfo<Value>& args){
+
+	/* Pointer to v8::Isolate object that represents the v8 instance itself. */
+	Isolate *isolate = args.GetIsolate();
+
+	/* Context of the currently running JavaScript instance. */
+	Local<Context> context = isolate->GetCurrentContext();
+
+	WrappedRational *ptrWrappedRational = ObjectWrap::Unwrap<WrappedRational>(args.Holder());
+
+	if(args.Length() > 0){
+		Isolate *isolate = args.GetIsolate();
+		throwException(isolate, Exception::TypeError, "Rational: invalid number of arguments");
+		return;
+	}
+
+	src::rational<long> retRational = src::operator-(*(ptrWrappedRational->ptrRational));
+
+	Local<Function> cons = Local<Function>::New(isolate, constructor);
+	int argc = 2;
+	Local<Value> argv[] = {
+		Number::New(isolate, retRational.numerator()),
+		Number::New(isolate, retRational.denominator())
+	};
+
+	args.GetReturnValue()
+		.Set(cons->NewInstance(context, argc, argv)
+		.ToLocalChecked()
+	);
+}
+
+void addon::WrappedRational::Abs(const FunctionCallbackInfo<Value>& args){
+
+	/* Pointer to v8::Isolate object that represents the v8 instance itself. */
+	Isolate *isolate = args.GetIsolate();
+
+	/* Context of the currently running JavaScript instance. */
+	Local<Context> context = isolate->GetCurrentContext();
+
+	WrappedRational *ptrWrappedRational = ObjectWrap::Unwrap<WrappedRational>(args.Holder());
+
+	if(args.Length() > 0){
+		Isolate *isolate = args.GetIsolate();
+		throwException(isolate, Exception::TypeError, "Rational: invalid number of arguments");
+		return;
+	}
+
+	src::rational<long> retRational = src::abs(*(ptrWrappedRational->ptrRational));
+
+	Local<Function> cons = Local<Function>::New(isolate, constructor);
+	int argc = 2;
+	Local<Value> argv[] = {
+		Number::New(isolate, retRational.numerator()),
+		Number::New(isolate, retRational.denominator())
+	};
+
+	args.GetReturnValue()
+		.Set(cons->NewInstance(context, argc, argv)
+		.ToLocalChecked()
+	);
 }
 
 void addon::WrappedRational::Not(const FunctionCallbackInfo<Value>& args){
@@ -1236,7 +1801,7 @@ void addon::WrappedRational::LessThan(const FunctionCallbackInfo<Value>& args){
 
 				long n = numObj.As<Number>()->Value();
 				long d = denObj.As<Number>()->Value();
-				esm::rational<long> r(n, d);
+				src::rational<long> r(n, d);
 
 				WrappedRational *ptrWrappedRational = ObjectWrap::Unwrap<WrappedRational>(args.Holder());
 				Local<Boolean> retval = Boolean::New(isolate, *ptrWrappedRational->ptrRational < r);
@@ -1254,7 +1819,7 @@ void addon::WrappedRational::LessThan(const FunctionCallbackInfo<Value>& args){
 
 				long n = value;
 				long d = 1L;
-				esm::rational<long> r(n, d);
+				src::rational<long> r(n, d);
 
 				WrappedRational *ptrWrappedRational = ObjectWrap::Unwrap<WrappedRational>(args.Holder());
 				Local<Boolean> retval = Boolean::New(isolate, *ptrWrappedRational->ptrRational < r);
@@ -1280,7 +1845,7 @@ void addon::WrappedRational::LessThan(const FunctionCallbackInfo<Value>& args){
 
 				long n = value;
 				long d = 1L;
-				esm::rational<long> r(n, d);
+				src::rational<long> r(n, d);
 
 				WrappedRational *ptrWrappedRational = ObjectWrap::Unwrap<WrappedRational>(args.Holder());
 				Local<Boolean> retval = Boolean::New(isolate, *ptrWrappedRational->ptrRational < r);
@@ -1333,7 +1898,7 @@ void addon::WrappedRational::GreaterThan(const FunctionCallbackInfo<Value>& args
 
 				long n = numObj.As<Number>()->Value();
 				long d = denObj.As<Number>()->Value();
-				esm::rational<long> r(n, d);
+				src::rational<long> r(n, d);
 
 				WrappedRational *ptrWrappedRational = ObjectWrap::Unwrap<WrappedRational>(args.Holder());
 				Local<Boolean> retval = Boolean::New(isolate, *ptrWrappedRational->ptrRational > r);
@@ -1351,7 +1916,7 @@ void addon::WrappedRational::GreaterThan(const FunctionCallbackInfo<Value>& args
 
 				long n = value;
 				long d = 1L;
-				esm::rational<long> r(n, d);
+				src::rational<long> r(n, d);
 
 				WrappedRational *ptrWrappedRational = ObjectWrap::Unwrap<WrappedRational>(args.Holder());
 				Local<Boolean> retval = Boolean::New(isolate, *ptrWrappedRational->ptrRational > r);
@@ -1377,7 +1942,7 @@ void addon::WrappedRational::GreaterThan(const FunctionCallbackInfo<Value>& args
 
 				long n = value;
 				long d = 1L;
-				esm::rational<long> r(n, d);
+				src::rational<long> r(n, d);
 
 				WrappedRational *ptrWrappedRational = ObjectWrap::Unwrap<WrappedRational>(args.Holder());
 				Local<Boolean> retval = Boolean::New(isolate, *ptrWrappedRational->ptrRational > r);
@@ -1430,7 +1995,7 @@ void addon::WrappedRational::EqualTo(const FunctionCallbackInfo<Value>& args){
 
 				long n = numObj.As<Number>()->Value();
 				long d = denObj.As<Number>()->Value();
-				esm::rational<long> r(n, d);
+				src::rational<long> r(n, d);
 
 				WrappedRational *ptrWrappedRational = ObjectWrap::Unwrap<WrappedRational>(args.Holder());
 				Local<Boolean> retval = Boolean::New(isolate, *ptrWrappedRational->ptrRational == r);
@@ -1448,7 +2013,7 @@ void addon::WrappedRational::EqualTo(const FunctionCallbackInfo<Value>& args){
 
 				long n = value;
 				long d = 1L;
-				esm::rational<long> r(n, d);
+				src::rational<long> r(n, d);
 
 				WrappedRational *ptrWrappedRational = ObjectWrap::Unwrap<WrappedRational>(args.Holder());
 				Local<Boolean> retval = Boolean::New(isolate, *ptrWrappedRational->ptrRational == r);
@@ -1474,7 +2039,7 @@ void addon::WrappedRational::EqualTo(const FunctionCallbackInfo<Value>& args){
 
 				long n = value;
 				long d = 1L;
-				esm::rational<long> r(n, d);
+				src::rational<long> r(n, d);
 
 				WrappedRational *ptrWrappedRational = ObjectWrap::Unwrap<WrappedRational>(args.Holder());
 				Local<Boolean> retval = Boolean::New(isolate, *ptrWrappedRational->ptrRational == r);
@@ -1527,7 +2092,7 @@ void addon::WrappedRational::NotEqualTo(const FunctionCallbackInfo<Value>& args)
 
 				long n = numObj.As<Number>()->Value();
 				long d = denObj.As<Number>()->Value();
-				esm::rational<long> r(n, d);
+				src::rational<long> r(n, d);
 
 				WrappedRational *ptrWrappedRational = ObjectWrap::Unwrap<WrappedRational>(args.Holder());
 				Local<Boolean> retval = Boolean::New(isolate, !(*ptrWrappedRational->ptrRational == r));
@@ -1545,7 +2110,7 @@ void addon::WrappedRational::NotEqualTo(const FunctionCallbackInfo<Value>& args)
 
 				long n = value;
 				long d = 1L;
-				esm::rational<long> r(n, d);
+				src::rational<long> r(n, d);
 
 				WrappedRational *ptrWrappedRational = ObjectWrap::Unwrap<WrappedRational>(args.Holder());
 				Local<Boolean> retval = Boolean::New(isolate, !(*ptrWrappedRational->ptrRational == r));
@@ -1571,7 +2136,7 @@ void addon::WrappedRational::NotEqualTo(const FunctionCallbackInfo<Value>& args)
 
 				long n = value;
 				long d = 1L;
-				esm::rational<long> r(n, d);
+				src::rational<long> r(n, d);
 
 				WrappedRational *ptrWrappedRational = ObjectWrap::Unwrap<WrappedRational>(args.Holder());
 				Local<Boolean> retval = Boolean::New(isolate, !(*ptrWrappedRational->ptrRational == r));
@@ -1602,7 +2167,7 @@ void addon::WrappedRational::ValueOf(const FunctionCallbackInfo<Value>& args){
 		return;
 	}
 
-	Local<Number> retval = Number::New(isolate, esm::rational_cast<double, long>(*ptrWrappedRational->ptrRational));
+	Local<Number> retval = Number::New(isolate, src::rational_cast<double, long>(*ptrWrappedRational->ptrRational));
 
 	args.GetReturnValue().Set(retval);
 }

@@ -893,7 +893,1579 @@ function loadTestData(){
 	testData.skip = false;
 	suites.get(suiteDesc).push(testData);
 
-	// TEST SUITE #3 - Rational add() function
+	// TEST SUITE #3 - Rational selfAdd() function
+	suiteDesc = 'Rational selfAdd() function';
+	suites.set(suiteDesc, []);
+
+	// TEST ### - Rational selfAdd() ... valid test#1
+	testData = {};
+	testData.method = () => {
+		let r = new rational_addon.Rational(1, 2);
+		let s = r.selfAdd(new rational_addon.Rational(2, 3));
+
+		assert.strictEqual(r.getNumerator(), 7);
+		assert.strictEqual(r.getDenominator(), 6);
+		assert(r === s);
+
+		r = new rational_module.Rational(1, 2);
+		s = r.selfAdd(new rational_module.Rational(2, 3));
+
+		assert.strictEqual(r.getNumerator(), 7);
+		assert.strictEqual(r.getDenominator(), 6);
+		assert(r === s);
+	};
+	testData.desc = 'Rational selfAdd() ... valid test#1';
+
+	testData.skip = false;
+	suites.get(suiteDesc).push(testData);
+
+	// TEST ### - Rational selfAdd() ... valid test#2
+	testData = {};
+	testData.method = () => {
+		let r = new rational_addon.Rational(1, 2);
+		let s = r.selfAdd(-2);
+
+		assert.strictEqual(r.getNumerator(), -3);
+		assert.strictEqual(r.getDenominator(), 2);
+		assert(r === s);
+
+		r = new rational_module.Rational(1, 2);
+		s = r.selfAdd(-2);
+
+		assert.strictEqual(r.getNumerator(), -3);
+		assert.strictEqual(r.getDenominator(), 2);
+		assert(r === s);
+	};
+	testData.desc = 'Rational selfAdd() ... valid test#2';
+
+	testData.skip = false;
+	suites.get(suiteDesc).push(testData);
+
+	// TEST ### - Rational selfAdd() ... valid test#3
+	testData = {};
+	testData.method = () => {
+		let r = new rational_addon.Rational(1, 2);
+		let s = r.selfAdd('-2');
+
+		assert.strictEqual(r.getNumerator(), -3);
+		assert.strictEqual(r.getDenominator(), 2);
+		assert(r === s);
+
+		r = new rational_module.Rational(1, 2);
+		s = r.selfAdd('-2');
+
+		assert.strictEqual(r.getNumerator(), -3);
+		assert.strictEqual(r.getDenominator(), 2);
+		assert(r === s);
+	};
+	testData.desc = 'Rational selfAdd() ... valid test#3';
+
+	testData.skip = false;
+	suites.get(suiteDesc).push(testData);
+
+	// TEST ### - Rational selfAdd() ... invalid test#1
+	testData = {};
+	testData.method = () => {
+		let r = new rational_addon.Rational();
+		assert.throws(
+			() => {
+				r.selfAdd();
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_addon.selfAdd()`);
+				assert.strictEqual(
+					err.message, `Rational: invalid number of arguments`,
+					`rational_addon.selfAdd()`
+				);
+				return true;
+			}
+		);
+
+		r = new rational_module.Rational();
+		assert.throws(
+			() => {
+				r.selfAdd();
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_module.selfAdd()`);
+				assert.strictEqual(
+					err.message, `Rational: invalid number of arguments`,
+					`rational_module.selfAdd()`
+				);
+				return true;
+			}
+		);
+	};
+	testData.desc = 'Rational selfAdd() ... invalid test#1';
+
+	testData.skip = false;
+	suites.get(suiteDesc).push(testData);
+
+	// TEST ### - Rational selfAdd() ... invalid test#2
+	testData = {};
+	testData.method = () => {
+		let r = new rational_addon.Rational();
+		assert.throws(
+			() => {
+				r.selfAdd(1, 2, 3);
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_addon.selfAdd(1, 2, 3)`);
+				assert.strictEqual(
+					err.message, `Rational: invalid number of arguments`,
+					`rational_addon.selfAdd(1, 2, 3)`
+				);
+				return true;
+			}
+		);
+
+		r = new rational_module.Rational();
+		assert.throws(
+			() => {
+				r.selfAdd(1, 2, 3);
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_module.selfAdd(1, 2, 3)`);
+				assert.strictEqual(
+					err.message, `Rational: invalid number of arguments`,
+					`rational_module.selfAdd(1, 2, 3)`
+				);
+				return true;
+			}
+		);
+	};
+	testData.desc = 'Rational selfAdd() ... invalid test#2';
+
+	testData.skip = false;
+	suites.get(suiteDesc).push(testData);
+
+	// TEST ### - Rational selfAdd() ... invalid test#3
+	testData = {};
+	testData.method = () => {
+		let r = new rational_addon.Rational();
+		assert.throws(
+			() => {
+				r.selfAdd({});
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_addon.selfAdd({})`);
+				assert.strictEqual(
+					err.message, `Rational: invalid argument`,
+					`rational_addon.selfAdd({})`
+				);
+				return true;
+			}
+		);
+
+		r = new rational_module.Rational();
+		assert.throws(
+			() => {
+				r.selfAdd({});
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_module.selfAdd({})`);
+				assert.strictEqual(
+					err.message, `Rational: invalid argument`,
+					`rational_module.selfAdd({})`
+				);
+				return true;
+			}
+		);
+	};
+	testData.desc = 'Rational selfAdd() ... invalid test#3';
+
+	testData.skip = false;
+	suites.get(suiteDesc).push(testData);
+
+	// TEST ### - Rational selfAdd() ... invalid test#4
+	testData = {};
+	testData.method = () => {
+		let r = new rational_addon.Rational();
+		assert.throws(
+			() => {
+				r.selfAdd(NaN);
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_addon.selfAdd(NaN)`);
+				assert.strictEqual(
+					err.message, `Rational: invalid argument`,
+					`rational_addon.selfAdd(NaN)`
+				);
+				return true;
+			}
+		);
+
+		r = new rational_module.Rational();
+		assert.throws(
+			() => {
+				r.selfAdd(NaN);
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_module.selfAdd(NaN)`);
+				assert.strictEqual(
+					err.message, `Rational: invalid argument`,
+					`rational_module.selfAdd(NaN)`
+				);
+				return true;
+			}
+		);
+	};
+	testData.desc = 'Rational selfAdd() ... invalid test#4';
+
+	testData.skip = false;
+	suites.get(suiteDesc).push(testData);
+
+	// TEST ### - Rational selfAdd() ... invalid test#5
+	testData = {};
+	testData.method = () => {
+		let r = new rational_addon.Rational();
+		assert.throws(
+			() => {
+				r.selfAdd(1n);
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_addon.selfAdd(1n)`);
+				assert.strictEqual(
+					err.message, `Rational: BigInt type is not accepted`,
+					`rational_addon.selfAdd(1n)`
+				);
+				return true;
+			}
+		);
+
+		r = new rational_module.Rational();
+		assert.throws(
+			() => {
+				r.selfAdd(1n);
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_module.selfAdd(1n)`);
+				assert.strictEqual(
+					err.message, `Rational: BigInt type is not accepted`,
+					`rational_module.selfAdd(1n)`
+				);
+				return true;
+			}
+		);
+	};
+	testData.desc = 'Rational selfAdd() ... invalid test#5';
+
+	testData.skip = false;
+	suites.get(suiteDesc).push(testData);
+
+	// TEST ### - Rational selfAdd() ... invalid test#6
+	testData = {};
+	testData.method = () => {
+		let r = new rational_addon.Rational();
+		assert.throws(
+			() => {
+				r.selfAdd('xxx');
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_addon.selfAdd('xxx')`);
+				assert.strictEqual(
+					err.message, `Rational: invalid argument`,
+					`rational_addon.selfAdd('xxx')`
+				);
+				return true;
+			}
+		);
+
+		r = new rational_module.Rational();
+		assert.throws(
+			() => {
+				r.selfAdd('xxx');
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_module.selfAdd('xxx')`);
+				assert.strictEqual(
+					err.message, `Rational: invalid argument`,
+					`rational_module.selfAdd('xxx')`
+				);
+				return true;
+			}
+		);
+	};
+	testData.desc = 'Rational selfAdd() ... invalid test#6';
+
+	testData.skip = false;
+	suites.get(suiteDesc).push(testData);
+
+	// TEST SUITE #4 - Rational selfSub() function
+	suiteDesc = 'Rational selfSub() function';
+	suites.set(suiteDesc, []);
+
+	// TEST ### - Rational selfSub() ... valid test#1
+	testData = {};
+	testData.method = () => {
+		let r = new rational_addon.Rational(3, 2);
+		let s = r.selfSub(new rational_addon.Rational(1, 2));
+
+		assert.strictEqual(r.getNumerator(), 1);
+		assert.strictEqual(r.getDenominator(), 1);
+		assert(r === s);
+
+		r = new rational_module.Rational(3, 2);
+		s = r.selfSub(new rational_module.Rational(1, 2));
+
+		assert.strictEqual(r.getNumerator(), 1);
+		assert.strictEqual(r.getDenominator(), 1);
+		assert(r === s);
+	};
+	testData.desc = 'Rational selfSub() ... valid test#1';
+
+	testData.skip = false;
+	suites.get(suiteDesc).push(testData);
+
+	// TEST ### - Rational selfSub() ... valid test#2
+	testData = {};
+	testData.method = () => {
+		let r = new rational_addon.Rational(3, 2);
+		let s = r.selfSub('1');
+
+		assert.strictEqual(r.getNumerator(), 1);
+		assert.strictEqual(r.getDenominator(), 2);
+		assert(r === s);
+
+		r = new rational_module.Rational(3, 2);
+		s = r.selfSub('1');
+
+		assert.strictEqual(r.getNumerator(), 1);
+		assert.strictEqual(r.getDenominator(), 2);
+		assert(r === s);
+	};
+	testData.desc = 'Rational selfSub() ... valid test#2';
+
+	testData.skip = false;
+	suites.get(suiteDesc).push(testData);
+
+	// TEST ### - Rational selfSub() ... valid test#3
+	testData = {};
+	testData.method = () => {
+		let r = new rational_addon.Rational(3, 2);
+		let s = r.selfSub('-1');
+
+		assert.strictEqual(r.getNumerator(), 5);
+		assert.strictEqual(r.getDenominator(), 2);
+		assert(r === s);
+
+		r = new rational_module.Rational(3, 2);
+		s = r.selfSub('-1');
+
+		assert.strictEqual(r.getNumerator(), 5);
+		assert.strictEqual(r.getDenominator(), 2);
+		assert(r === s);
+	};
+	testData.desc = 'Rational selfSub() ... valid test#3';
+
+	testData.skip = false;
+	suites.get(suiteDesc).push(testData);
+
+	// TEST ### - Rational selfSub() ... invalid test#1
+	testData = {};
+	testData.method = () => {
+		let r = new rational_addon.Rational();
+		assert.throws(
+			() => {
+				r.selfSub();
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_addon.selfSub()`);
+				assert.strictEqual(
+					err.message, `Rational: invalid number of arguments`,
+					`rational_addon.selfSub()`
+				);
+				return true;
+			}
+		);
+
+		r = new rational_module.Rational();
+		assert.throws(
+			() => {
+				r.selfSub();
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_module.selfSub()`);
+				assert.strictEqual(
+					err.message, `Rational: invalid number of arguments`,
+					`rational_module.selfSub()`
+				);
+				return true;
+			}
+		);
+	};
+	testData.desc = 'Rational selfSub() ... invalid test#1';
+
+	testData.skip = false;
+	suites.get(suiteDesc).push(testData);
+
+	// TEST ### - Rational selfSub() ... invalid test#2
+	testData = {};
+	testData.method = () => {
+		let r = new rational_addon.Rational();
+		assert.throws(
+			() => {
+				r.selfSub(1, 2, 3);
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_addon.selfSub(1, 2, 3)`);
+				assert.strictEqual(
+					err.message, `Rational: invalid number of arguments`,
+					`rational_addon.selfSub(1, 2, 3)`
+				);
+				return true;
+			}
+		);
+
+		r = new rational_module.Rational();
+		assert.throws(
+			() => {
+				r.selfSub(1, 2, 3);
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_module.selfSub(1, 2, 3)`);
+				assert.strictEqual(
+					err.message, `Rational: invalid number of arguments`,
+					`rational_module.selfSub(1, 2, 3)`
+				);
+				return true;
+			}
+		);
+	};
+	testData.desc = 'Rational selfSub() ... invalid test#2';
+
+	testData.skip = false;
+	suites.get(suiteDesc).push(testData);
+
+	// TEST ### - Rational selfSub() ... invalid test#3
+	testData = {};
+	testData.method = () => {
+		let r = new rational_addon.Rational();
+		assert.throws(
+			() => {
+				r.selfSub({});
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_addon.selfSub({})`);
+				assert.strictEqual(
+					err.message, `Rational: invalid argument`,
+					`rational_addon.selfSub({})`
+				);
+				return true;
+			}
+		);
+
+		r = new rational_module.Rational();
+		assert.throws(
+			() => {
+				r.selfSub({});
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_module.selfSub({})`);
+				assert.strictEqual(
+					err.message, `Rational: invalid argument`,
+					`rational_module.selfSub({})`
+				);
+				return true;
+			}
+		);
+	};
+	testData.desc = 'Rational selfSub() ... invalid test#3';
+
+	testData.skip = false;
+	suites.get(suiteDesc).push(testData);
+
+	// TEST ### - Rational selfSub() ... invalid test#4
+	testData = {};
+	testData.method = () => {
+		let r = new rational_addon.Rational();
+		assert.throws(
+			() => {
+				r.selfSub(NaN);
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_addon.selfSub(NaN)`);
+				assert.strictEqual(
+					err.message, `Rational: invalid argument`,
+					`rational_addon.selfSub(NaN)`
+				);
+				return true;
+			}
+		);
+
+		r = new rational_module.Rational();
+		assert.throws(
+			() => {
+				r.selfSub(NaN);
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_module.selfSub(NaN)`);
+				assert.strictEqual(
+					err.message, `Rational: invalid argument`,
+					`rational_module.selfSub(NaN)`
+				);
+				return true;
+			}
+		);
+	};
+	testData.desc = 'Rational selfSub() ... invalid test#4';
+
+	testData.skip = false;
+	suites.get(suiteDesc).push(testData);
+
+	// TEST ### - Rational selfSub() ... invalid test#5
+	testData = {};
+	testData.method = () => {
+		let r = new rational_addon.Rational();
+		assert.throws(
+			() => {
+				r.selfSub(1n);
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_addon.selfSub(1n)`);
+				assert.strictEqual(
+					err.message, `Rational: BigInt type is not accepted`,
+					`rational_addon.selfSub(1n)`
+				);
+				return true;
+			}
+		);
+
+		r = new rational_module.Rational();
+		assert.throws(
+			() => {
+				r.selfSub(1n);
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_module.selfSub(1n)`);
+				assert.strictEqual(
+					err.message, `Rational: BigInt type is not accepted`,
+					`rational_module.selfSub(1n)`
+				);
+				return true;
+			}
+		);
+	};
+	testData.desc = 'Rational selfSub() ... invalid test#5';
+
+	testData.skip = false;
+	suites.get(suiteDesc).push(testData);
+
+	// TEST ### - Rational selfSub() ... invalid test#6
+	testData = {};
+	testData.method = () => {
+		let r = new rational_addon.Rational();
+		assert.throws(
+			() => {
+				r.selfSub('xxx');
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_addon.selfSub('xxx')`);
+				assert.strictEqual(
+					err.message, `Rational: invalid argument`,
+					`rational_addon.selfSub('xxx')`
+				);
+				return true;
+			}
+		);
+
+		r = new rational_module.Rational();
+		assert.throws(
+			() => {
+				r.selfSub('xxx');
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_module.selfSub('xxx')`);
+				assert.strictEqual(
+					err.message, `Rational: invalid argument`,
+					`rational_module.selfSub('xxx')`
+				);
+				return true;
+			}
+		);
+	};
+	testData.desc = 'Rational selfSub() ... invalid test#6';
+
+	testData.skip = false;
+	suites.get(suiteDesc).push(testData);
+
+	// TEST SUITE #5 - Rational selfMul() function
+	suiteDesc = 'Rational selfMul() function';
+	suites.set(suiteDesc, []);
+
+	// TEST ### - Rational selfMul() ... valid test#1
+	testData = {};
+	testData.method = () => {
+		let r = new rational_addon.Rational(3, 2);
+		let s = r.selfMul(new rational_addon.Rational(1, 2));
+
+		assert.strictEqual(r.getNumerator(), 3);
+		assert.strictEqual(r.getDenominator(), 4);
+		assert(r === s);
+
+		r = new rational_module.Rational(3, 2);
+		s = r.selfMul(new rational_module.Rational(1, 2));
+
+		assert.strictEqual(r.getNumerator(), 3);
+		assert.strictEqual(r.getDenominator(), 4);
+		assert(r === s);
+	};
+	testData.desc = 'Rational selfMul() ... valid test#1';
+
+	testData.skip = false;
+	suites.get(suiteDesc).push(testData);
+
+	// TEST ### - Rational selfMul() ... valid test#2
+	testData = {};
+	testData.method = () => {
+		let r = new rational_addon.Rational(3, 2);
+		let s = r.selfMul('1');
+
+		assert.strictEqual(r.getNumerator(), 3);
+		assert.strictEqual(r.getDenominator(), 2);
+		assert(r === s);
+
+		r = new rational_module.Rational(3, 2);
+		s = r.selfMul('1');
+
+		assert.strictEqual(r.getNumerator(), 3);
+		assert.strictEqual(r.getDenominator(), 2);
+		assert(r === s);
+	};
+	testData.desc = 'Rational selfMul() ... valid test#2';
+
+	testData.skip = false;
+	suites.get(suiteDesc).push(testData);
+
+	// TEST ### - Rational selfMul() ... valid test#3
+	testData = {};
+	testData.method = () => {
+		let r = new rational_addon.Rational(3, 2);
+		let s = r.selfMul('-1');
+
+		assert.strictEqual(r.getNumerator(), -3);
+		assert.strictEqual(r.getDenominator(), 2);
+		assert(r === s);
+
+		r = new rational_module.Rational(3, 2);
+		s = r.selfMul('-1');
+
+		assert.strictEqual(r.getNumerator(), -3);
+		assert.strictEqual(r.getDenominator(), 2);
+		assert(r === s);
+	};
+	testData.desc = 'Rational selfMul() ... valid test#3';
+
+	testData.skip = false;
+	suites.get(suiteDesc).push(testData);
+
+	// TEST ### - Rational selfMul() ... invalid test#1
+	testData = {};
+	testData.method = () => {
+		let r = new rational_addon.Rational();
+		assert.throws(
+			() => {
+				r.selfMul();
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_addon.selfMul()`);
+				assert.strictEqual(
+					err.message, `Rational: invalid number of arguments`,
+					`rational_addon.selfMul()`
+				);
+				return true;
+			}
+		);
+
+		r = new rational_module.Rational();
+		assert.throws(
+			() => {
+				r.selfMul();
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_module.selfMul()`);
+				assert.strictEqual(
+					err.message, `Rational: invalid number of arguments`,
+					`rational_module.selfMul()`
+				);
+				return true;
+			}
+		);
+	};
+	testData.desc = 'Rational selfMul() ... invalid test#1';
+
+	testData.skip = false;
+	suites.get(suiteDesc).push(testData);
+
+	// TEST ### - Rational selfMul() ... invalid test#2
+	testData = {};
+	testData.method = () => {
+		let r = new rational_addon.Rational();
+		assert.throws(
+			() => {
+				r.selfMul(1, 2, 3);
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_addon.selfMul(1, 2, 3)`);
+				assert.strictEqual(
+					err.message, `Rational: invalid number of arguments`,
+					`rational_addon.selfMul(1, 2, 3)`
+				);
+				return true;
+			}
+		);
+
+		r = new rational_module.Rational();
+		assert.throws(
+			() => {
+				r.selfMul(1, 2, 3);
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_module.selfMul(1, 2, 3)`);
+				assert.strictEqual(
+					err.message, `Rational: invalid number of arguments`,
+					`rational_module.selfMul(1, 2, 3)`
+				);
+				return true;
+			}
+		);
+	};
+	testData.desc = 'Rational selfMul() ... invalid test#2';
+
+	testData.skip = false;
+	suites.get(suiteDesc).push(testData);
+
+	// TEST ### - Rational selfMul() ... invalid test#3
+	testData = {};
+	testData.method = () => {
+		let r = new rational_addon.Rational();
+		assert.throws(
+			() => {
+				r.selfMul({});
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_addon.selfMul({})`);
+				assert.strictEqual(
+					err.message, `Rational: invalid argument`,
+					`rational_addon.selfMul({})`
+				);
+				return true;
+			}
+		);
+
+		r = new rational_module.Rational();
+		assert.throws(
+			() => {
+				r.selfMul({});
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_module.selfMul({})`);
+				assert.strictEqual(
+					err.message, `Rational: invalid argument`,
+					`rational_module.selfMul({})`
+				);
+				return true;
+			}
+		);
+	};
+	testData.desc = 'Rational selfMul() ... invalid test#3';
+
+	testData.skip = false;
+	suites.get(suiteDesc).push(testData);
+
+	// TEST ### - Rational selfMul() ... invalid test#4
+	testData = {};
+	testData.method = () => {
+		let r = new rational_addon.Rational();
+		assert.throws(
+			() => {
+				r.selfMul(NaN);
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_addon.selfMul(NaN)`);
+				assert.strictEqual(
+					err.message, `Rational: invalid argument`,
+					`rational_addon.selfMul(NaN)`
+				);
+				return true;
+			}
+		);
+
+		r = new rational_module.Rational();
+		assert.throws(
+			() => {
+				r.selfMul(NaN);
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_module.selfMul(NaN)`);
+				assert.strictEqual(
+					err.message, `Rational: invalid argument`,
+					`rational_module.selfMul(NaN)`
+				);
+				return true;
+			}
+		);
+	};
+	testData.desc = 'Rational selfMul() ... invalid test#4';
+
+	testData.skip = false;
+	suites.get(suiteDesc).push(testData);
+
+	// TEST ### - Rational selfMul() ... invalid test#5
+	testData = {};
+	testData.method = () => {
+		let r = new rational_addon.Rational();
+		assert.throws(
+			() => {
+				r.selfMul(1n);
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_addon.selfMul(1n)`);
+				assert.strictEqual(
+					err.message, `Rational: BigInt type is not accepted`,
+					`rational_addon.selfMul(1n)`
+				);
+				return true;
+			}
+		);
+
+		r = new rational_module.Rational();
+		assert.throws(
+			() => {
+				r.selfMul(1n);
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_module.selfMul(1n)`);
+				assert.strictEqual(
+					err.message, `Rational: BigInt type is not accepted`,
+					`rational_module.selfMul(1n)`
+				);
+				return true;
+			}
+		);
+	};
+	testData.desc = 'Rational selfMul() ... invalid test#5';
+
+	testData.skip = false;
+	suites.get(suiteDesc).push(testData);
+
+	// TEST ### - Rational selfMul() ... invalid test#6
+	testData = {};
+	testData.method = () => {
+		let r = new rational_addon.Rational();
+		assert.throws(
+			() => {
+				r.selfMul('xxx');
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_addon.selfMul('xxx')`);
+				assert.strictEqual(
+					err.message, `Rational: invalid argument`,
+					`rational_addon.selfMul('xxx')`
+				);
+				return true;
+			}
+		);
+
+		r = new rational_module.Rational();
+		assert.throws(
+			() => {
+				r.selfMul('xxx');
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_module.selfMul('xxx')`);
+				assert.strictEqual(
+					err.message, `Rational: invalid argument`,
+					`rational_module.selfMul('xxx')`
+				);
+				return true;
+			}
+		);
+	};
+	testData.desc = 'Rational selfMul() ... invalid test#6';
+
+	testData.skip = false;
+	suites.get(suiteDesc).push(testData);
+
+	// TEST SUITE #6 - Rational selfDiv() function
+	suiteDesc = 'Rational selfDiv() function';
+	suites.set(suiteDesc, []);
+
+	// TEST ### - Rational selfDiv() ... valid test#1
+	testData = {};
+	testData.method = () => {
+		let r = new rational_addon.Rational(3, 2);
+		let s = r.selfDiv(new rational_addon.Rational(-1, 2));
+
+		assert.strictEqual(r.getNumerator(), -3);
+		assert.strictEqual(r.getDenominator(), 1);
+		assert(r === s);
+
+		r = new rational_module.Rational(3, 2);
+		s = r.selfDiv(new rational_module.Rational(-1, 2));
+
+		assert.strictEqual(r.getNumerator(), -3);
+		assert.strictEqual(r.getDenominator(), 1);
+		assert(r === s);
+	};
+	testData.desc = 'Rational selfDiv() ... valid test#1';
+
+	testData.skip = false;
+	suites.get(suiteDesc).push(testData);
+
+	// TEST ### - Rational selfDiv() ... valid test#2
+	testData = {};
+	testData.method = () => {
+		let r = new rational_addon.Rational(3, 2);
+		let s = r.selfDiv('1');
+
+		assert.strictEqual(r.getNumerator(), 3);
+		assert.strictEqual(r.getDenominator(), 2);
+		assert(r === s);
+
+		r = new rational_module.Rational(3, 2);
+		s = r.selfDiv('1');
+
+		assert.strictEqual(r.getNumerator(), 3);
+		assert.strictEqual(r.getDenominator(), 2);
+		assert(r === s);
+	};
+	testData.desc = 'Rational selfDiv() ... valid test#2';
+
+	testData.skip = false;
+	suites.get(suiteDesc).push(testData);
+
+	// TEST ### - Rational selfDiv() ... valid test#3
+	testData = {};
+	testData.method = () => {
+		let r = new rational_addon.Rational(3, 2);
+		let s = r.selfDiv('-1');
+
+		assert.strictEqual(r.getNumerator(), -3);
+		assert.strictEqual(r.getDenominator(), 2);
+		assert(r === s);
+
+		r = new rational_module.Rational(3, 2);
+		s = r.selfDiv('-1');
+
+		assert.strictEqual(r.getNumerator(), -3);
+		assert.strictEqual(r.getDenominator(), 2);
+		assert(r === s);
+	};
+	testData.desc = 'Rational selfDiv() ... valid test#3';
+
+	testData.skip = false;
+	suites.get(suiteDesc).push(testData);
+
+	// TEST ### - Rational selfDiv() ... invalid test#1
+	testData = {};
+	testData.method = () => {
+		let r = new rational_addon.Rational();
+		assert.throws(
+			() => {
+				r.selfDiv();
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_addon.selfDiv()`);
+				assert.strictEqual(
+					err.message, `Rational: invalid number of arguments`,
+					`rational_addon.selfDiv()`
+				);
+				return true;
+			}
+		);
+
+		r = new rational_module.Rational();
+		assert.throws(
+			() => {
+				r.selfDiv();
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_module.selfDiv()`);
+				assert.strictEqual(
+					err.message, `Rational: invalid number of arguments`,
+					`rational_module.selfDiv()`
+				);
+				return true;
+			}
+		);
+	};
+	testData.desc = 'Rational selfDiv() ... invalid test#1';
+
+	testData.skip = false;
+	suites.get(suiteDesc).push(testData);
+
+	// TEST ### - Rational selfDiv() ... invalid test#2
+	testData = {};
+	testData.method = () => {
+		let r = new rational_addon.Rational();
+		assert.throws(
+			() => {
+				r.selfDiv(1, 2, 3);
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_addon.selfDiv(1, 2, 3)`);
+				assert.strictEqual(
+					err.message, `Rational: invalid number of arguments`,
+					`rational_addon.selfDiv(1, 2, 3)`
+				);
+				return true;
+			}
+		);
+
+		r = new rational_module.Rational();
+		assert.throws(
+			() => {
+				r.selfDiv(1, 2, 3);
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_module.selfDiv(1, 2, 3)`);
+				assert.strictEqual(
+					err.message, `Rational: invalid number of arguments`,
+					`rational_module.selfDiv(1, 2, 3)`
+				);
+				return true;
+			}
+		);
+	};
+	testData.desc = 'Rational selfDiv() ... invalid test#2';
+
+	testData.skip = false;
+	suites.get(suiteDesc).push(testData);
+
+	// TEST ### - Rational selfDiv() ... invalid test#3
+	testData = {};
+	testData.method = () => {
+		let r = new rational_addon.Rational();
+		assert.throws(
+			() => {
+				r.selfDiv({});
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_addon.selfDiv({})`);
+				assert.strictEqual(
+					err.message, `Rational: invalid argument`,
+					`rational_addon.selfDiv({})`
+				);
+				return true;
+			}
+		);
+
+		r = new rational_module.Rational();
+		assert.throws(
+			() => {
+				r.selfDiv({});
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_module.selfDiv({})`);
+				assert.strictEqual(
+					err.message, `Rational: invalid argument`,
+					`rational_module.selfDiv({})`
+				);
+				return true;
+			}
+		);
+	};
+	testData.desc = 'Rational selfDiv() ... invalid test#3';
+
+	testData.skip = false;
+	suites.get(suiteDesc).push(testData);
+
+	// TEST ### - Rational selfDiv() ... invalid test#4
+	testData = {};
+	testData.method = () => {
+		let r = new rational_addon.Rational();
+		assert.throws(
+			() => {
+				r.selfDiv(NaN);
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_addon.selfDiv(NaN)`);
+				assert.strictEqual(
+					err.message, `Rational: invalid argument`,
+					`rational_addon.selfDiv(NaN)`
+				);
+				return true;
+			}
+		);
+
+		r = new rational_module.Rational();
+		assert.throws(
+			() => {
+				r.selfDiv(NaN);
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_module.selfDiv(NaN)`);
+				assert.strictEqual(
+					err.message, `Rational: invalid argument`,
+					`rational_module.selfDiv(NaN)`
+				);
+				return true;
+			}
+		);
+	};
+	testData.desc = 'Rational selfDiv() ... invalid test#4';
+
+	testData.skip = false;
+	suites.get(suiteDesc).push(testData);
+
+	// TEST ### - Rational selfDiv() ... invalid test#5
+	testData = {};
+	testData.method = () => {
+		let r = new rational_addon.Rational();
+		assert.throws(
+			() => {
+				r.selfDiv(1n);
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_addon.selfDiv(1n)`);
+				assert.strictEqual(
+					err.message, `Rational: BigInt type is not accepted`,
+					`rational_addon.selfDiv(1n)`
+				);
+				return true;
+			}
+		);
+
+		r = new rational_module.Rational();
+		assert.throws(
+			() => {
+				r.selfDiv(1n);
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_module.selfDiv(1n)`);
+				assert.strictEqual(
+					err.message, `Rational: BigInt type is not accepted`,
+					`rational_module.selfDiv(1n)`
+				);
+				return true;
+			}
+		);
+	};
+	testData.desc = 'Rational selfDiv() ... invalid test#5';
+
+	testData.skip = false;
+	suites.get(suiteDesc).push(testData);
+
+	// TEST ### - Rational selfDiv() ... invalid test#6
+	testData = {};
+	testData.method = () => {
+		let r = new rational_addon.Rational();
+		assert.throws(
+			() => {
+				r.selfDiv('xxx');
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_addon.selfDiv('xxx')`);
+				assert.strictEqual(
+					err.message, `Rational: invalid argument`,
+					`rational_addon.selfDiv('xxx')`
+				);
+				return true;
+			}
+		);
+
+		r = new rational_module.Rational();
+		assert.throws(
+			() => {
+				r.selfDiv('xxx');
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_module.selfDiv('xxx')`);
+				assert.strictEqual(
+					err.message, `Rational: invalid argument`,
+					`rational_module.selfDiv('xxx')`
+				);
+				return true;
+			}
+		);
+	};
+	testData.desc = 'Rational selfDiv() ... invalid test#6';
+
+	testData.skip = false;
+	suites.get(suiteDesc).push(testData);
+
+	// TEST ### - Rational selfDiv() ... invalid test#7
+	testData = {};
+	testData.method = () => {
+		let r = new rational_addon.Rational(3, 2);
+		assert.throws(
+			() => {
+				r.selfDiv(new rational_addon.Rational());
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_addon.selfDiv(new rational_addon.Rational())`);
+				assert.strictEqual(
+					err.message, `Rational: division by zero`,
+					`rational_addon.selfDiv(new rational_addon.Rational())`
+				);
+				return true;
+			}
+		);
+
+		r = new rational_module.Rational(3, 2);
+		assert.throws(
+			() => {
+				r.selfDiv(new rational_module.Rational());
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_module.selfDiv(new rational_module.Rational())`);
+				assert.strictEqual(
+					err.message, `Rational: division by zero`,
+					`rational_module.selfDiv(new rational_module.Rational())`
+				);
+				return true;
+			}
+		);
+	};
+	testData.desc = 'Rational selfDiv() ... invalid test#7';
+
+	testData.skip = false;
+	suites.get(suiteDesc).push(testData);
+
+	// TEST ### - Rational selfDiv() ... invalid test#8
+	testData = {};
+	testData.method = () => {
+		let r = new rational_addon.Rational();
+		assert.throws(
+			() => {
+				r.selfDiv(0);
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_addon.selfDiv(0)`);
+				assert.strictEqual(
+					err.message, `Rational: division by zero`,
+					`rational_addon.selfDiv(0)`
+				);
+				return true;
+			}
+		);
+
+		r = new rational_module.Rational();
+		assert.throws(
+			() => {
+				r.selfDiv(0);
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_module.selfDiv(0)`);
+				assert.strictEqual(
+					err.message, `Rational: division by zero`,
+					`rational_module.selfDiv(0)`
+				);
+				return true;
+			}
+		);
+	};
+	testData.desc = 'Rational selfDiv() ... invalid test#8';
+
+	testData.skip = false;
+	suites.get(suiteDesc).push(testData);
+
+	// TEST SUITE #7 - Rational selfPow() function
+	suiteDesc = 'Rational selfPow() function';
+	suites.set(suiteDesc, []);
+
+	// TEST ### - Rational selfPow() ... valid test#1
+	testData = {};
+	testData.method = () => {
+		let r = new rational_addon.Rational(3, 2);
+		let s = r.selfPow(0);
+
+		assert.strictEqual(r.getNumerator(), 1);
+		assert.strictEqual(r.getDenominator(), 1);
+		assert(r === s);
+
+		r = new rational_module.Rational(3, 2);
+		s = r.selfPow(0);
+
+		assert.strictEqual(r.getNumerator(), 1);
+		assert.strictEqual(r.getDenominator(), 1);
+		assert(r === s);
+	};
+	testData.desc = 'Rational selfPow() ... valid test#1';
+
+	testData.skip = false;
+	suites.get(suiteDesc).push(testData);
+
+	// TEST ### - Rational selfPow() ... valid test#2
+	testData = {};
+	testData.method = () => {
+		let r = new rational_addon.Rational(-3, 2);
+		let s = r.selfPow(1);
+
+		assert.strictEqual(r.getNumerator(), -3);
+		assert.strictEqual(r.getDenominator(), 2);
+		assert(r === s);
+
+		r = new rational_module.Rational(-3, 2);
+		s = r.selfPow(1);
+
+		assert.strictEqual(r.getNumerator(), -3);
+		assert.strictEqual(r.getDenominator(), 2);
+		assert(r === s);
+	};
+	testData.desc = 'Rational selfPow() ... valid test#2';
+
+	testData.skip = false;
+	suites.get(suiteDesc).push(testData);
+
+	// TEST ### - Rational selfPow() ... valid test#3
+	testData = {};
+	testData.method = () => {
+		let r = new rational_addon.Rational(-3, 2);
+		let s = r.selfPow(2);
+
+		assert.strictEqual(r.getNumerator(), 9);
+		assert.strictEqual(r.getDenominator(), 4);
+		assert(r === s);
+
+		r = new rational_module.Rational(-3, 2);
+		s = r.selfPow(2);
+
+		assert.strictEqual(r.getNumerator(), 9);
+		assert.strictEqual(r.getDenominator(), 4);
+		assert(r === s);
+	};
+	testData.desc = 'Rational selfPow() ... valid test#3';
+
+	testData.skip = false;
+	suites.get(suiteDesc).push(testData);
+
+	// TEST ### - Rational selfPow() ... valid test#4
+	testData = {};
+	testData.method = () => {
+		let r = new rational_addon.Rational(-3, 2);
+		let s = r.selfPow(-1);
+
+		assert.strictEqual(r.getNumerator(), -2);
+		assert.strictEqual(r.getDenominator(), 3);
+		assert(r === s);
+
+		r = new rational_module.Rational(-3, 2);
+		s = r.selfPow(-1);
+
+		assert.strictEqual(r.getNumerator(), -2);
+		assert.strictEqual(r.getDenominator(), 3);
+		assert(r === s);
+	};
+	testData.desc = 'Rational selfPow() ... valid test#4';
+
+	testData.skip = false;
+	suites.get(suiteDesc).push(testData);
+
+	// TEST ### - Rational selfPow() ... valid test#5
+	testData = {};
+	testData.method = () => {
+		let r = new rational_addon.Rational(-3, 2);
+		let s = r.selfPow(-2);
+
+		assert.strictEqual(r.getNumerator(), 4);
+		assert.strictEqual(r.getDenominator(), 9);
+		assert(r === s);
+
+		r = new rational_module.Rational(-3, 2);
+		s = r.selfPow(-2);
+
+		assert.strictEqual(r.getNumerator(), 4);
+		assert.strictEqual(r.getDenominator(), 9);
+		assert(r === s);
+	};
+	testData.desc = 'Rational selfPow() ... valid test#5';
+
+	testData.skip = false;
+	suites.get(suiteDesc).push(testData);
+
+	// TEST ### - Rational selfPow() ... invalid test#1
+	testData = {};
+	testData.method = () => {
+		let r = new rational_addon.Rational(3, 2);
+		assert.throws(
+			() => {
+				r.selfPow();
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_addon.selfPow()`);
+				assert.strictEqual(
+					err.message, `Rational: invalid number of arguments`,
+					`rational_addon.selfPow()`
+				);
+				return true;
+			}
+		);
+
+		r = new rational_module.Rational(3, 2);
+		assert.throws(
+			() => {
+				r.selfPow();
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_module.selfPow()`);
+				assert.strictEqual(
+					err.message, `Rational: invalid number of arguments`,
+					`rational_module.selfPow()`
+				);
+				return true;
+			}
+		);
+	};
+	testData.desc = 'Rational selfPow() ... invalid test#1';
+
+	testData.skip = false;
+	suites.get(suiteDesc).push(testData);
+
+	// TEST ### - Rational selfPow() ... invalid test#2
+	testData = {};
+	testData.method = () => {
+		let r = new rational_addon.Rational(3, 2);
+		assert.throws(
+			() => {
+				r.selfPow(1, 2);
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_addon.selfPow(1, 2)`);
+				assert.strictEqual(
+					err.message, `Rational: invalid number of arguments`,
+					`rational_addon.selfPow(1, 2)`
+				);
+				return true;
+			}
+		);
+
+		r = new rational_module.Rational(3, 2);
+		assert.throws(
+			() => {
+				r.selfPow(1, 2);
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_module.selfPow(1, 2)`);
+				assert.strictEqual(
+					err.message, `Rational: invalid number of arguments`,
+					`rational_module.selfPow(1, 2)`
+				);
+				return true;
+			}
+		);
+	};
+	testData.desc = 'Rational selfPow() ... invalid test#2';
+
+	testData.skip = false;
+	suites.get(suiteDesc).push(testData);
+
+	// TEST ### - Rational selfPow() ... invalid test#3
+	testData = {};
+	testData.method = () => {
+		let r = new rational_addon.Rational(3, 2);
+		assert.throws(
+			() => {
+				r.selfPow({});
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_addon.selfPow({})`);
+				assert.strictEqual(
+					err.message, `Rational: invalid argument`,
+					`rational_addon.selfPow({})`
+				);
+				return true;
+			}
+		);
+
+		r = new rational_module.Rational(3, 2);
+		assert.throws(
+			() => {
+				r.selfPow({});
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_module.selfPow({})`);
+				assert.strictEqual(
+					err.message, `Rational: invalid argument`,
+					`rational_module.selfPow({})`
+				);
+				return true;
+			}
+		);
+	};
+	testData.desc = 'Rational selfPow() ... invalid test#3';
+
+	testData.skip = false;
+	suites.get(suiteDesc).push(testData);
+
+	// TEST ### - Rational selfPow() ... invalid test#4
+	testData = {};
+	testData.method = () => {
+		let r = new rational_addon.Rational(3, 2);
+		assert.throws(
+			() => {
+				r.selfPow(1n);
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_addon.selfPow(1n)`);
+				assert.strictEqual(
+					err.message, `Rational: BigInt type is not accepted`,
+					`rational_addon.selfPow(1n)`
+				);
+				return true;
+			}
+		);
+
+		r = new rational_module.Rational(3, 2);
+		assert.throws(
+			() => {
+				r.selfPow(1n);
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_module.selfPow(1n)`);
+				assert.strictEqual(
+					err.message, `Rational: BigInt type is not accepted`,
+					`rational_module.selfPow(1n)`
+				);
+				return true;
+			}
+		);
+	};
+	testData.desc = 'Rational selfPow() ... invalid test#4';
+
+	testData.skip = false;
+	suites.get(suiteDesc).push(testData);
+
+	// TEST ### - Rational selfPow() ... invalid test#5
+	testData = {};
+	testData.method = () => {
+		let r = new rational_addon.Rational();
+		assert.throws(
+			() => {
+				r.selfPow(-3);
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_addon.selfPow(-3)`);
+				assert.strictEqual(
+					err.message, `Rational: division by zero`,
+					`rational_addon.selfPow(-3)`
+				);
+				return true;
+			}
+		);
+
+		r = new rational_module.Rational();
+		assert.throws(
+			() => {
+				r.selfPow(-3);
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_module.selfPow(-3)`);
+				assert.strictEqual(
+					err.message, `Rational: division by zero`,
+					`rational_module.selfPow(-3)`
+				);
+				return true;
+			}
+		);
+	};
+	testData.desc = 'Rational selfPow() ... invalid test#5';
+
+	testData.skip = false;
+	suites.get(suiteDesc).push(testData);
+
+	// TEST SUITE #8 - Rational add() function
 	suiteDesc = 'Rational add() function';
 	suites.set(suiteDesc, []);
 
@@ -903,16 +2475,24 @@ function loadTestData(){
 		let r = new rational_addon.Rational(1, 2);
 		let s = r.add(new rational_addon.Rational(2, 3));
 
-		assert.strictEqual(r.getNumerator(), 7);
-		assert.strictEqual(r.getDenominator(), 6);
-		assert(r === s);
+		assert.strictEqual(r.getNumerator(), 1);
+		assert.strictEqual(r.getDenominator(), 2);
+
+		assert.strictEqual(s.getNumerator(), 7);
+		assert.strictEqual(s.getDenominator(), 6);
+
+		assert(r !== s);
 
 		r = new rational_module.Rational(1, 2);
 		s = r.add(new rational_module.Rational(2, 3));
 
-		assert.strictEqual(r.getNumerator(), 7);
-		assert.strictEqual(r.getDenominator(), 6);
-		assert(r === s);
+		assert.strictEqual(r.getNumerator(), 1);
+		assert.strictEqual(r.getDenominator(), 2);
+
+		assert.strictEqual(s.getNumerator(), 7);
+		assert.strictEqual(s.getDenominator(), 6);
+
+		assert(r !== s);
 	};
 	testData.desc = 'Rational add() ... valid test#1';
 
@@ -925,16 +2505,24 @@ function loadTestData(){
 		let r = new rational_addon.Rational(1, 2);
 		let s = r.add(-2);
 
-		assert.strictEqual(r.getNumerator(), -3);
+		assert.strictEqual(r.getNumerator(), 1);
 		assert.strictEqual(r.getDenominator(), 2);
-		assert(r === s);
+
+		assert.strictEqual(s.getNumerator(), -3);
+		assert.strictEqual(s.getDenominator(), 2);
+
+		assert(r !== s);
 
 		r = new rational_module.Rational(1, 2);
 		s = r.add(-2);
 
-		assert.strictEqual(r.getNumerator(), -3);
+		assert.strictEqual(r.getNumerator(), 1);
 		assert.strictEqual(r.getDenominator(), 2);
-		assert(r === s);
+
+		assert.strictEqual(s.getNumerator(), -3);
+		assert.strictEqual(s.getDenominator(), 2);
+
+		assert(r !== s);
 	};
 	testData.desc = 'Rational add() ... valid test#2';
 
@@ -947,16 +2535,24 @@ function loadTestData(){
 		let r = new rational_addon.Rational(1, 2);
 		let s = r.add('-2');
 
-		assert.strictEqual(r.getNumerator(), -3);
+		assert.strictEqual(r.getNumerator(), 1);
 		assert.strictEqual(r.getDenominator(), 2);
-		assert(r === s);
+
+		assert.strictEqual(s.getNumerator(), -3);
+		assert.strictEqual(s.getDenominator(), 2);
+
+		assert(r !== s);
 
 		r = new rational_module.Rational(1, 2);
 		s = r.add('-2');
 
-		assert.strictEqual(r.getNumerator(), -3);
+		assert.strictEqual(r.getNumerator(), 1);
 		assert.strictEqual(r.getDenominator(), 2);
-		assert(r === s);
+
+		assert.strictEqual(s.getNumerator(), -3);
+		assert.strictEqual(s.getDenominator(), 2);
+
+		assert(r !== s);
 	};
 	testData.desc = 'Rational add() ... valid test#3';
 
@@ -1191,7 +2787,7 @@ function loadTestData(){
 	testData.skip = false;
 	suites.get(suiteDesc).push(testData);
 
-	// TEST SUITE #4 - Rational sub() function
+	// TEST SUITE #9 - Rational sub() function
 	suiteDesc = 'Rational sub() function';
 	suites.set(suiteDesc, []);
 
@@ -1201,16 +2797,24 @@ function loadTestData(){
 		let r = new rational_addon.Rational(3, 2);
 		let s = r.sub(new rational_addon.Rational(1, 2));
 
-		assert.strictEqual(r.getNumerator(), 1);
-		assert.strictEqual(r.getDenominator(), 1);
-		assert(r === s);
+		assert.strictEqual(r.getNumerator(), 3);
+		assert.strictEqual(r.getDenominator(), 2);
+
+		assert.strictEqual(s.getNumerator(), 1);
+		assert.strictEqual(s.getDenominator(), 1);
+
+		assert(r !== s);
 
 		r = new rational_module.Rational(3, 2);
 		s = r.sub(new rational_module.Rational(1, 2));
 
-		assert.strictEqual(r.getNumerator(), 1);
-		assert.strictEqual(r.getDenominator(), 1);
-		assert(r === s);
+		assert.strictEqual(r.getNumerator(), 3);
+		assert.strictEqual(r.getDenominator(), 2);
+
+		assert.strictEqual(s.getNumerator(), 1);
+		assert.strictEqual(s.getDenominator(), 1);
+
+		assert(r !== s);
 	};
 	testData.desc = 'Rational sub() ... valid test#1';
 
@@ -1223,16 +2827,24 @@ function loadTestData(){
 		let r = new rational_addon.Rational(3, 2);
 		let s = r.sub('1');
 
-		assert.strictEqual(r.getNumerator(), 1);
+		assert.strictEqual(r.getNumerator(), 3);
 		assert.strictEqual(r.getDenominator(), 2);
-		assert(r === s);
+
+		assert.strictEqual(s.getNumerator(), 1);
+		assert.strictEqual(s.getDenominator(), 2);
+
+		assert(r !== s);
 
 		r = new rational_module.Rational(3, 2);
 		s = r.sub('1');
 
-		assert.strictEqual(r.getNumerator(), 1);
+		assert.strictEqual(r.getNumerator(), 3);
 		assert.strictEqual(r.getDenominator(), 2);
-		assert(r === s);
+
+		assert.strictEqual(s.getNumerator(), 1);
+		assert.strictEqual(s.getDenominator(), 2);
+
+		assert(r !== s);
 	};
 	testData.desc = 'Rational sub() ... valid test#2';
 
@@ -1245,16 +2857,24 @@ function loadTestData(){
 		let r = new rational_addon.Rational(3, 2);
 		let s = r.sub('-1');
 
-		assert.strictEqual(r.getNumerator(), 5);
+		assert.strictEqual(r.getNumerator(), 3);
 		assert.strictEqual(r.getDenominator(), 2);
-		assert(r === s);
+
+		assert.strictEqual(s.getNumerator(), 5);
+		assert.strictEqual(s.getDenominator(), 2);
+
+		assert(r !== s);
 
 		r = new rational_module.Rational(3, 2);
 		s = r.sub('-1');
 
-		assert.strictEqual(r.getNumerator(), 5);
+		assert.strictEqual(r.getNumerator(), 3);
 		assert.strictEqual(r.getDenominator(), 2);
-		assert(r === s);
+
+		assert.strictEqual(s.getNumerator(), 5);
+		assert.strictEqual(s.getDenominator(), 2);
+
+		assert(r !== s);
 	};
 	testData.desc = 'Rational sub() ... valid test#3';
 
@@ -1489,7 +3109,7 @@ function loadTestData(){
 	testData.skip = false;
 	suites.get(suiteDesc).push(testData);
 
-	// TEST SUITE #5 - Rational mul() function
+	// TEST SUITE #10 - Rational mul() function
 	suiteDesc = 'Rational mul() function';
 	suites.set(suiteDesc, []);
 
@@ -1500,15 +3120,23 @@ function loadTestData(){
 		let s = r.mul(new rational_addon.Rational(1, 2));
 
 		assert.strictEqual(r.getNumerator(), 3);
-		assert.strictEqual(r.getDenominator(), 4);
-		assert(r === s);
+		assert.strictEqual(r.getDenominator(), 2);
+
+		assert.strictEqual(s.getNumerator(), 3);
+		assert.strictEqual(s.getDenominator(), 4);
+
+		assert(r !== s);
 
 		r = new rational_module.Rational(3, 2);
 		s = r.mul(new rational_module.Rational(1, 2));
 
 		assert.strictEqual(r.getNumerator(), 3);
-		assert.strictEqual(r.getDenominator(), 4);
-		assert(r === s);
+		assert.strictEqual(r.getDenominator(), 2);
+
+		assert.strictEqual(s.getNumerator(), 3);
+		assert.strictEqual(s.getDenominator(), 4);
+
+		assert(r !== s);
 	};
 	testData.desc = 'Rational mul() ... valid test#1';
 
@@ -1523,14 +3151,22 @@ function loadTestData(){
 
 		assert.strictEqual(r.getNumerator(), 3);
 		assert.strictEqual(r.getDenominator(), 2);
-		assert(r === s);
+
+		assert.strictEqual(s.getNumerator(), 3);
+		assert.strictEqual(s.getDenominator(), 2);
+
+		assert(r !== s);
 
 		r = new rational_module.Rational(3, 2);
 		s = r.mul('1');
 
 		assert.strictEqual(r.getNumerator(), 3);
 		assert.strictEqual(r.getDenominator(), 2);
-		assert(r === s);
+
+		assert.strictEqual(r.getNumerator(), 3);
+		assert.strictEqual(r.getDenominator(), 2);
+
+		assert(r !== s);
 	};
 	testData.desc = 'Rational mul() ... valid test#2';
 
@@ -1543,16 +3179,24 @@ function loadTestData(){
 		let r = new rational_addon.Rational(3, 2);
 		let s = r.mul('-1');
 
-		assert.strictEqual(r.getNumerator(), -3);
+		assert.strictEqual(r.getNumerator(), 3);
 		assert.strictEqual(r.getDenominator(), 2);
-		assert(r === s);
+
+		assert.strictEqual(s.getNumerator(), -3);
+		assert.strictEqual(s.getDenominator(), 2);
+
+		assert(r !== s);
 
 		r = new rational_module.Rational(3, 2);
 		s = r.mul('-1');
 
-		assert.strictEqual(r.getNumerator(), -3);
+		assert.strictEqual(r.getNumerator(), 3);
 		assert.strictEqual(r.getDenominator(), 2);
-		assert(r === s);
+
+		assert.strictEqual(s.getNumerator(), -3);
+		assert.strictEqual(s.getDenominator(), 2);
+
+		assert(r !== s);
 	};
 	testData.desc = 'Rational mul() ... valid test#3';
 
@@ -1787,7 +3431,7 @@ function loadTestData(){
 	testData.skip = false;
 	suites.get(suiteDesc).push(testData);
 
-	// TEST SUITE #6 - Rational div() function
+	// TEST SUITE #11 - Rational div() function
 	suiteDesc = 'Rational div() function';
 	suites.set(suiteDesc, []);
 
@@ -1797,16 +3441,24 @@ function loadTestData(){
 		let r = new rational_addon.Rational(3, 2);
 		let s = r.div(new rational_addon.Rational(-1, 2));
 
-		assert.strictEqual(r.getNumerator(), -3);
-		assert.strictEqual(r.getDenominator(), 1);
-		assert(r === s);
+		assert.strictEqual(r.getNumerator(), 3);
+		assert.strictEqual(r.getDenominator(), 2);
+
+		assert.strictEqual(s.getNumerator(), -3);
+		assert.strictEqual(s.getDenominator(), 1);
+
+		assert(r !== s);
 
 		r = new rational_module.Rational(3, 2);
 		s = r.div(new rational_module.Rational(-1, 2));
 
-		assert.strictEqual(r.getNumerator(), -3);
-		assert.strictEqual(r.getDenominator(), 1);
-		assert(r === s);
+		assert.strictEqual(r.getNumerator(), 3);
+		assert.strictEqual(r.getDenominator(), 2);
+
+		assert.strictEqual(s.getNumerator(), -3);
+		assert.strictEqual(s.getDenominator(), 1);
+
+		assert(r !== s);
 	};
 	testData.desc = 'Rational div() ... valid test#1';
 
@@ -1821,14 +3473,22 @@ function loadTestData(){
 
 		assert.strictEqual(r.getNumerator(), 3);
 		assert.strictEqual(r.getDenominator(), 2);
-		assert(r === s);
+
+		assert.strictEqual(s.getNumerator(), 3);
+		assert.strictEqual(s.getDenominator(), 2);
+
+		assert(r !== s);
 
 		r = new rational_module.Rational(3, 2);
 		s = r.div('1');
 
 		assert.strictEqual(r.getNumerator(), 3);
 		assert.strictEqual(r.getDenominator(), 2);
-		assert(r === s);
+
+		assert.strictEqual(s.getNumerator(), 3);
+		assert.strictEqual(s.getDenominator(), 2);
+
+		assert(r !== s);
 	};
 	testData.desc = 'Rational div() ... valid test#2';
 
@@ -1841,16 +3501,24 @@ function loadTestData(){
 		let r = new rational_addon.Rational(3, 2);
 		let s = r.div('-1');
 
-		assert.strictEqual(r.getNumerator(), -3);
+		assert.strictEqual(r.getNumerator(), 3);
 		assert.strictEqual(r.getDenominator(), 2);
-		assert(r === s);
+
+		assert.strictEqual(s.getNumerator(), -3);
+		assert.strictEqual(s.getDenominator(), 2);
+
+		assert(r !== s);
 
 		r = new rational_module.Rational(3, 2);
 		s = r.div('-1');
 
-		assert.strictEqual(r.getNumerator(), -3);
+		assert.strictEqual(r.getNumerator(), 3);
 		assert.strictEqual(r.getDenominator(), 2);
-		assert(r === s);
+
+		assert.strictEqual(s.getNumerator(), -3);
+		assert.strictEqual(s.getDenominator(), 2);
+
+		assert(r !== s);
 	};
 	testData.desc = 'Rational div() ... valid test#3';
 
@@ -2161,7 +3829,7 @@ function loadTestData(){
 	testData.skip = false;
 	suites.get(suiteDesc).push(testData);
 
-	// TEST SUITE #7 - Rational pow() function
+	// TEST SUITE #12 - Rational pow() function
 	suiteDesc = 'Rational pow() function';
 	suites.set(suiteDesc, []);
 
@@ -2171,16 +3839,24 @@ function loadTestData(){
 		let r = new rational_addon.Rational(3, 2);
 		let s = r.pow(0);
 
-		assert.strictEqual(r.getNumerator(), 1);
-		assert.strictEqual(r.getDenominator(), 1);
-		assert(r === s);
+		assert.strictEqual(r.getNumerator(), 3);
+		assert.strictEqual(r.getDenominator(), 2);
+
+		assert.strictEqual(s.getNumerator(), 1);
+		assert.strictEqual(s.getDenominator(), 1);
+
+		assert(r !== s);
 
 		r = new rational_module.Rational(3, 2);
 		s = r.pow(0);
 
-		assert.strictEqual(r.getNumerator(), 1);
-		assert.strictEqual(r.getDenominator(), 1);
-		assert(r === s);
+		assert.strictEqual(r.getNumerator(), 3);
+		assert.strictEqual(r.getDenominator(), 2);
+
+		assert.strictEqual(s.getNumerator(), 1);
+		assert.strictEqual(s.getDenominator(), 1);
+
+		assert(r !== s);
 	};
 	testData.desc = 'Rational pow() ... valid test#1';
 
@@ -2195,14 +3871,22 @@ function loadTestData(){
 
 		assert.strictEqual(r.getNumerator(), -3);
 		assert.strictEqual(r.getDenominator(), 2);
-		assert(r === s);
+
+		assert.strictEqual(s.getNumerator(), -3);
+		assert.strictEqual(s.getDenominator(), 2);
+
+		assert(r !== s);
 
 		r = new rational_module.Rational(-3, 2);
 		s = r.pow(1);
 
 		assert.strictEqual(r.getNumerator(), -3);
 		assert.strictEqual(r.getDenominator(), 2);
-		assert(r === s);
+
+		assert.strictEqual(s.getNumerator(), -3);
+		assert.strictEqual(s.getDenominator(), 2);
+
+		assert(r !== s);
 	};
 	testData.desc = 'Rational pow() ... valid test#2';
 
@@ -2215,16 +3899,24 @@ function loadTestData(){
 		let r = new rational_addon.Rational(-3, 2);
 		let s = r.pow(2);
 
-		assert.strictEqual(r.getNumerator(), 9);
-		assert.strictEqual(r.getDenominator(), 4);
-		assert(r === s);
+		assert.strictEqual(r.getNumerator(), -3);
+		assert.strictEqual(r.getDenominator(), 2);
+
+		assert.strictEqual(s.getNumerator(), 9);
+		assert.strictEqual(s.getDenominator(), 4);
+
+		assert(r !== s);
 
 		r = new rational_module.Rational(-3, 2);
 		s = r.pow(2);
 
-		assert.strictEqual(r.getNumerator(), 9);
-		assert.strictEqual(r.getDenominator(), 4);
-		assert(r === s);
+		assert.strictEqual(r.getNumerator(), -3);
+		assert.strictEqual(r.getDenominator(), 2);
+
+		assert.strictEqual(s.getNumerator(), 9);
+		assert.strictEqual(s.getDenominator(), 4);
+
+		assert(r !== s);
 	};
 	testData.desc = 'Rational pow() ... valid test#3';
 
@@ -2237,16 +3929,24 @@ function loadTestData(){
 		let r = new rational_addon.Rational(-3, 2);
 		let s = r.pow(-1);
 
-		assert.strictEqual(r.getNumerator(), -2);
-		assert.strictEqual(r.getDenominator(), 3);
-		assert(r === s);
+		assert.strictEqual(r.getNumerator(), -3);
+		assert.strictEqual(r.getDenominator(), 2);
+
+		assert.strictEqual(s.getNumerator(), -2);
+		assert.strictEqual(s.getDenominator(), 3);
+
+		assert(r !== s);
 
 		r = new rational_module.Rational(-3, 2);
 		s = r.pow(-1);
 
-		assert.strictEqual(r.getNumerator(), -2);
-		assert.strictEqual(r.getDenominator(), 3);
-		assert(r === s);
+		assert.strictEqual(r.getNumerator(), -3);
+		assert.strictEqual(r.getDenominator(), 2);
+
+		assert.strictEqual(s.getNumerator(), -2);
+		assert.strictEqual(s.getDenominator(), 3);
+
+		assert(r !== s);
 	};
 	testData.desc = 'Rational pow() ... valid test#4';
 
@@ -2259,16 +3959,24 @@ function loadTestData(){
 		let r = new rational_addon.Rational(-3, 2);
 		let s = r.pow(-2);
 
-		assert.strictEqual(r.getNumerator(), 4);
-		assert.strictEqual(r.getDenominator(), 9);
-		assert(r === s);
+		assert.strictEqual(r.getNumerator(), -3);
+		assert.strictEqual(r.getDenominator(), 2);
+
+		assert.strictEqual(s.getNumerator(), 4);
+		assert.strictEqual(s.getDenominator(), 9);
+
+		assert(r !== s);
 
 		r = new rational_module.Rational(-3, 2);
 		s = r.pow(-2);
 
-		assert.strictEqual(r.getNumerator(), 4);
-		assert.strictEqual(r.getDenominator(), 9);
-		assert(r === s);
+		assert.strictEqual(r.getNumerator(), -3);
+		assert.strictEqual(r.getDenominator(), 2);
+
+		assert.strictEqual(s.getNumerator(), 4);
+		assert.strictEqual(s.getDenominator(), 9);
+
+		assert(r !== s);
 	};
 	testData.desc = 'Rational pow() ... valid test#5';
 
@@ -2465,7 +4173,7 @@ function loadTestData(){
 	testData.skip = false;
 	suites.get(suiteDesc).push(testData);
 
-	// TEST SUITE #8 - Rational preInc() function
+	// TEST SUITE #13 - Rational preInc() function
 	suiteDesc = 'Rational preInc() function';
 	suites.set(suiteDesc, []);
 
@@ -2591,7 +4299,7 @@ function loadTestData(){
 	testData.skip = false;
 	suites.get(suiteDesc).push(testData);
 
-	// TEST SUITE #9 - Rational preDec() function
+	// TEST SUITE #14 - Rational preDec() function
 	suiteDesc = 'Rational preDec() function';
 	suites.set(suiteDesc, []);
 
@@ -2717,7 +4425,7 @@ function loadTestData(){
 	testData.skip = false;
 	suites.get(suiteDesc).push(testData);
 
-	// TEST SUITE #10 - Rational postInc() function
+	// TEST SUITE #15 - Rational postInc() function
 	suiteDesc = 'Rational postInc() function';
 	suites.set(suiteDesc, []);
 
@@ -2843,7 +4551,7 @@ function loadTestData(){
 	testData.skip = false;
 	suites.get(suiteDesc).push(testData);
 
-	// TEST SUITE #11 - Rational postDec() function
+	// TEST SUITE #16 - Rational postDec() function
 	suiteDesc = 'Rational postDec() function';
 	suites.set(suiteDesc, []);
 
@@ -2969,7 +4677,93 @@ function loadTestData(){
 	testData.skip = false;
 	suites.get(suiteDesc).push(testData);
 
-	// TEST SUITE #12 - Rational abs() function
+	// TEST SUITE #17 - Rational selfAbs() function
+	suiteDesc = 'Rational selfAbs() function';
+	suites.set(suiteDesc, []);
+
+	// TEST ### - Rational selfAbs() ... valid test#1
+	testData = {};
+	testData.method = () => {
+		let r = new rational_addon.Rational(-3, 2);
+		let s = r.selfAbs();
+
+		assert.strictEqual(r.getNumerator(), 3);
+		assert.strictEqual(r.getDenominator(), 2);
+		assert(r === s);
+
+		r = new rational_module.Rational(-3, 2);
+		s = r.selfAbs();
+
+		assert.strictEqual(r.getNumerator(), 3);
+		assert.strictEqual(r.getDenominator(), 2);
+		assert(r === s);
+	};
+	testData.desc = 'Rational selfAbs() ... valid test#1';
+
+	testData.skip = false;
+	suites.get(suiteDesc).push(testData);
+
+	// TEST ### - Rational selfAbs() ... valid test#2
+	testData = {};
+	testData.method = () => {
+		let r = new rational_addon.Rational(3, 2);
+		let s = r.selfAbs();
+
+		assert.strictEqual(r.getNumerator(), 3);
+		assert.strictEqual(r.getDenominator(), 2);
+		assert(r === s);
+
+		r = new rational_module.Rational(3, 2);
+		s = r.selfAbs();
+
+		assert.strictEqual(r.getNumerator(), 3);
+		assert.strictEqual(r.getDenominator(), 2);
+		assert(r === s);
+	};
+	testData.desc = 'Rational selfAbs() ... valid test#2';
+
+	testData.skip = false;
+	suites.get(suiteDesc).push(testData);
+
+	// TEST ### - Rational selfAbs() ... invalid test#1
+	testData = {};
+	testData.method = () => {
+		let r = new rational_addon.Rational(3, 2);
+		assert.throws(
+			() => {
+				r.selfAbs(1, 2);
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_addon.selfAbs(1, 2)`);
+				assert.strictEqual(
+					err.message, `Rational: invalid number of arguments`,
+					`rational_addon.selfAbs(1, 2)`
+				);
+				return true;
+			}
+		);
+
+		r = new rational_module.Rational(3, 2);
+		assert.throws(
+			() => {
+				r.selfAbs(1, 2);
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_module.selfAbs(1, 2)`);
+				assert.strictEqual(
+					err.message, `Rational: invalid number of arguments`,
+					`rational_module.selfAbs(1, 2)`
+				);
+				return true;
+			}
+		);
+	};
+	testData.desc = 'Rational selfAbs() ... invalid test#1';
+
+	testData.skip = false;
+	suites.get(suiteDesc).push(testData);
+
+	// TEST SUITE #18 - Rational abs() function
 	suiteDesc = 'Rational abs() function';
 	suites.set(suiteDesc, []);
 
@@ -2979,16 +4773,24 @@ function loadTestData(){
 		let r = new rational_addon.Rational(-3, 2);
 		let s = r.abs();
 
-		assert.strictEqual(r.getNumerator(), 3);
+		assert.strictEqual(r.getNumerator(), -3);
 		assert.strictEqual(r.getDenominator(), 2);
-		assert(r === s);
+
+		assert.strictEqual(s.getNumerator(), 3);
+		assert.strictEqual(s.getDenominator(), 2);
+
+		assert(r !== s);
 
 		r = new rational_module.Rational(-3, 2);
 		s = r.abs();
 
-		assert.strictEqual(r.getNumerator(), 3);
+		assert.strictEqual(r.getNumerator(), -3);
 		assert.strictEqual(r.getDenominator(), 2);
-		assert(r === s);
+
+		assert.strictEqual(s.getNumerator(), 3);
+		assert.strictEqual(s.getDenominator(), 2);
+
+		assert(r !== s);
 	};
 	testData.desc = 'Rational abs() ... valid test#1';
 
@@ -3003,14 +4805,22 @@ function loadTestData(){
 
 		assert.strictEqual(r.getNumerator(), 3);
 		assert.strictEqual(r.getDenominator(), 2);
-		assert(r === s);
+
+		assert.strictEqual(s.getNumerator(), 3);
+		assert.strictEqual(s.getDenominator(), 2);
+
+		assert(r !== s);
 
 		r = new rational_module.Rational(3, 2);
 		s = r.abs();
 
 		assert.strictEqual(r.getNumerator(), 3);
 		assert.strictEqual(r.getDenominator(), 2);
-		assert(r === s);
+
+		assert.strictEqual(s.getNumerator(), 3);
+		assert.strictEqual(s.getDenominator(), 2);
+
+		assert(r !== s);
 	};
 	testData.desc = 'Rational abs() ... valid test#2';
 
@@ -3055,7 +4865,93 @@ function loadTestData(){
 	testData.skip = false;
 	suites.get(suiteDesc).push(testData);
 
-	// TEST SUITE #13 - Rational neg() function
+	// TEST SUITE #19 - Rational selfNeg() function
+	suiteDesc = 'Rational selfNeg() function';
+	suites.set(suiteDesc, []);
+
+	// TEST ### - Rational selfNeg() ... valid test#1
+	testData = {};
+	testData.method = () => {
+		let r = new rational_addon.Rational(-3, 2);
+		let s = r.selfNeg();
+
+		assert.strictEqual(r.getNumerator(), 3);
+		assert.strictEqual(r.getDenominator(), 2);
+		assert(r === s);
+
+		r = new rational_module.Rational(-3, 2);
+		s = r.selfNeg();
+
+		assert.strictEqual(r.getNumerator(), 3);
+		assert.strictEqual(r.getDenominator(), 2);
+		assert(r === s);
+	};
+	testData.desc = 'Rational selfNeg() ... valid test#1';
+
+	testData.skip = false;
+	suites.get(suiteDesc).push(testData);
+
+	// TEST ### - Rational selfNeg() ... valid test#2
+	testData = {};
+	testData.method = () => {
+		let r = new rational_addon.Rational(3, 2);
+		let s = r.selfNeg();
+
+		assert.strictEqual(r.getNumerator(), -3);
+		assert.strictEqual(r.getDenominator(), 2);
+		assert(r === s);
+
+		r = new rational_module.Rational(3, 2);
+		s = r.selfNeg();
+
+		assert.strictEqual(r.getNumerator(), -3);
+		assert.strictEqual(r.getDenominator(), 2);
+		assert(r === s);
+	};
+	testData.desc = 'Rational selfNeg() ... valid test#2';
+
+	testData.skip = false;
+	suites.get(suiteDesc).push(testData);
+
+	// TEST ### - Rational selfNeg() ... invalid test#1
+	testData = {};
+	testData.method = () => {
+		let r = new rational_addon.Rational(3, 2);
+		assert.throws(
+			() => {
+				r.selfNeg(1, 2);
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_addon.selfNeg(1, 2)`);
+				assert.strictEqual(
+					err.message, `Rational: invalid number of arguments`,
+					`rational_addon.selfNeg(1, 2)`
+				);
+				return true;
+			}
+		);
+
+		r = new rational_module.Rational(3, 2);
+		assert.throws(
+			() => {
+				r.selfNeg(1, 2);
+			},
+			(err) => {
+				assert(err instanceof TypeError, `rational_module.selfNeg(1, 2)`);
+				assert.strictEqual(
+					err.message, `Rational: invalid number of arguments`,
+					`rational_module.selfNeg(1, 2)`
+				);
+				return true;
+			}
+		);
+	};
+	testData.desc = 'Rational selfNeg() ... invalid test#1';
+
+	testData.skip = false;
+	suites.get(suiteDesc).push(testData);
+
+	// TEST SUITE #20 - Rational neg() function
 	suiteDesc = 'Rational neg() function';
 	suites.set(suiteDesc, []);
 
@@ -3065,16 +4961,24 @@ function loadTestData(){
 		let r = new rational_addon.Rational(-3, 2);
 		let s = r.neg();
 
-		assert.strictEqual(r.getNumerator(), 3);
+		assert.strictEqual(r.getNumerator(), -3);
 		assert.strictEqual(r.getDenominator(), 2);
-		assert(r === s);
+
+		assert.strictEqual(s.getNumerator(), 3);
+		assert.strictEqual(s.getDenominator(), 2);
+
+		assert(r !== s);
 
 		r = new rational_module.Rational(-3, 2);
 		s = r.neg();
 
-		assert.strictEqual(r.getNumerator(), 3);
+		assert.strictEqual(r.getNumerator(), -3);
 		assert.strictEqual(r.getDenominator(), 2);
-		assert(r === s);
+
+		assert.strictEqual(s.getNumerator(), 3);
+		assert.strictEqual(s.getDenominator(), 2);
+
+		assert(r !== s);
 	};
 	testData.desc = 'Rational neg() ... valid test#1';
 
@@ -3087,16 +4991,24 @@ function loadTestData(){
 		let r = new rational_addon.Rational(3, 2);
 		let s = r.neg();
 
-		assert.strictEqual(r.getNumerator(), -3);
+		assert.strictEqual(r.getNumerator(), 3);
 		assert.strictEqual(r.getDenominator(), 2);
-		assert(r === s);
+
+		assert.strictEqual(s.getNumerator(), -3);
+		assert.strictEqual(s.getDenominator(), 2);
+
+		assert(r !== s);
 
 		r = new rational_module.Rational(3, 2);
 		s = r.neg();
 
-		assert.strictEqual(r.getNumerator(), -3);
+		assert.strictEqual(r.getNumerator(), 3);
 		assert.strictEqual(r.getDenominator(), 2);
-		assert(r === s);
+
+		assert.strictEqual(s.getNumerator(), -3);
+		assert.strictEqual(s.getDenominator(), 2);
+
+		assert(r !== s);
 	};
 	testData.desc = 'Rational neg() ... valid test#2';
 
@@ -3141,7 +5053,7 @@ function loadTestData(){
 	testData.skip = false;
 	suites.get(suiteDesc).push(testData);
 
-	// TEST SUITE #13 - Rational not() function
+	// TEST SUITE #21 - Rational not() function
 	suiteDesc = 'Rational not() function';
 	suites.set(suiteDesc, []);
 
@@ -3223,7 +5135,7 @@ function loadTestData(){
 	testData.skip = false;
 	suites.get(suiteDesc).push(testData);
 
-	// TEST SUITE #13 - Rational bool() function
+	// TEST SUITE #22 - Rational bool() function
 	suiteDesc = 'Rational bool() function';
 	suites.set(suiteDesc, []);
 
@@ -3305,7 +5217,7 @@ function loadTestData(){
 	testData.skip = false;
 	suites.get(suiteDesc).push(testData);
 
-	// TEST SUITE #14 - Rational lessThan() function
+	// TEST SUITE #23 - Rational lessThan() function
 	suiteDesc = 'Rational lessThan() function';
 	suites.set(suiteDesc, []);
 
@@ -3615,7 +5527,7 @@ function loadTestData(){
 	testData.skip = false;
 	suites.get(suiteDesc).push(testData);
 
-	// TEST SUITE #15 - Rational greaterThan() function
+	// TEST SUITE #24 - Rational greaterThan() function
 	suiteDesc = 'Rational greaterThan() function';
 	suites.set(suiteDesc, []);
 
@@ -3925,7 +5837,7 @@ function loadTestData(){
 	testData.skip = false;
 	suites.get(suiteDesc).push(testData);
 
-	// TEST SUITE #15 - Rational equalTo() function
+	// TEST SUITE #25 - Rational equalTo() function
 	suiteDesc = 'Rational equalTo() function';
 	suites.set(suiteDesc, []);
 
@@ -4235,7 +6147,7 @@ function loadTestData(){
 	testData.skip = false;
 	suites.get(suiteDesc).push(testData);
 
-	// TEST SUITE #16 - Rational notEqualTo() function
+	// TEST SUITE #26 - Rational notEqualTo() function
 	suiteDesc = 'Rational notEqualTo() function';
 	suites.set(suiteDesc, []);
 
@@ -4545,7 +6457,7 @@ function loadTestData(){
 	testData.skip = false;
 	suites.get(suiteDesc).push(testData);
 
-	// TEST SUITE #17 - Rational valueOf() function
+	// TEST SUITE #27 - Rational valueOf() function
 	suiteDesc = 'Rational valueOf() function';
 	suites.set(suiteDesc, []);
 
@@ -4611,7 +6523,7 @@ function loadTestData(){
 	testData.skip = false;
 	suites.get(suiteDesc).push(testData);
 
-	// TEST SUITE #18 - Rational toString() function
+	// TEST SUITE #28 - Rational toString() function
 	suiteDesc = 'Rational toString() function';
 	suites.set(suiteDesc, []);
 

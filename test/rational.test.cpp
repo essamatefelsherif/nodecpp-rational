@@ -19,7 +19,7 @@
  */
 namespace utest{
 
-	using namespace esm;
+	using namespace src;
 
 	/** Define a structure variable to enclose testing options. */
 	struct {
@@ -67,27 +67,20 @@ namespace utest{
 }
 
 int main(){
-
 	using namespace utest;
 
 	loadTestData();
-	testRunner();
-/*
 
-//	// Print some of the above results
-//	cout << half << " + " << half << " = " << one << endl;
-//	cout << one  << " - " << half << " = " << half << endl;
-//	cout << two  << " * " << half << " = " << one << endl;
-//	cout << one  << " / " << half << " = " << two << endl;
-//	cout << "abs(" << minus_half << ")=" << half << endl;
-//	cout << "2 * " << big << "=" << maxint
-//		 << " (rational: " << rational<int>(maxint) << ")" << endl;
-*/
+	cmdOptions.verbose = false;
+	testRunner();
+
+	cmdOptions.verbose = true;
+	testRunner();
+
 	return 0;
 }
 
 void utest::loadTestData(){
-
 	SuitePtr suitePtr = nullptr;
 	TestPtr testPtr = nullptr;
 
@@ -99,7 +92,7 @@ void utest::loadTestData(){
 
 	suites.push_back(suitePtr);
 
-	// TEST ### - Default constructor
+	// TEST #1 - Default constructor
 	testPtr = new Test();
 
 	testPtr->desc   = "Default constructor";
@@ -108,7 +101,7 @@ void utest::loadTestData(){
 
 	suitePtr->testList->push_back(testPtr);
 
-	// TEST ### - One argument constructor
+	// TEST #2 - One argument constructor
 	testPtr = new Test();
 
 	testPtr->desc   = "One argument constructor";
@@ -117,7 +110,7 @@ void utest::loadTestData(){
 
 	suitePtr->testList->push_back(testPtr);
 
-	// TEST ### - Two arguments constructor
+	// TEST #3 - Two arguments constructor
 	testPtr = new Test();
 
 	testPtr->desc   = "Two arguments constructor";
@@ -126,7 +119,7 @@ void utest::loadTestData(){
 
 	suitePtr->testList->push_back(testPtr);
 
-	// TEST ### - Two arguments constructor invalid
+	// TEST #4 - Two arguments constructor invalid
 	testPtr = new Test();
 
 	testPtr->desc   = "Two arguments constructor invalid";
@@ -135,7 +128,7 @@ void utest::loadTestData(){
 
 	suitePtr->testList->push_back(testPtr);
 
-	// TEST ### - Copy constructor
+	// TEST #5 - Copy constructor
 	testPtr = new Test();
 
 	testPtr->desc   = "Copy constructor";
@@ -152,7 +145,7 @@ void utest::loadTestData(){
 
 	suites.push_back(suitePtr);
 
-	// TEST ### - Assignment
+	// TEST #6 - Assignment
 	testPtr = new Test();
 
 	testPtr->desc   = "Assignment";
@@ -161,7 +154,7 @@ void utest::loadTestData(){
 
 	suitePtr->testList->push_back(testPtr);
 
-	// TEST ### - Arithmetic assignment
+	// TEST #7 - Arithmetic assignment
 	testPtr = new Test();
 
 	testPtr->desc   = "Arithmetic assignment";
@@ -170,7 +163,7 @@ void utest::loadTestData(){
 
 	suitePtr->testList->push_back(testPtr);
 
-	// TEST ### - Arithmetic assignment invalid
+	// TEST #8 - Arithmetic assignment invalid
 	testPtr = new Test();
 
 	testPtr->desc   = "Arithmetic assignment invalid";
@@ -179,7 +172,7 @@ void utest::loadTestData(){
 
 	suitePtr->testList->push_back(testPtr);
 
-	// TEST ### - Arithmetic assignment with int type
+	// TEST #9 - Arithmetic assignment with int type
 	testPtr = new Test();
 
 	testPtr->desc   = "Arithmetic assignment with int type";
@@ -188,7 +181,7 @@ void utest::loadTestData(){
 
 	suitePtr->testList->push_back(testPtr);
 
-	// TEST ### - Arithmetic assignment with int type invalid
+	// TEST #10 - Arithmetic assignment with int type invalid
 	testPtr = new Test();
 
 	testPtr->desc   = "Arithmetic assignment with int type invalid";
@@ -205,7 +198,7 @@ void utest::loadTestData(){
 
 	suites.push_back(suitePtr);
 
-	// TEST ### - Increment / decrement
+	// TEST #11 - Increment / decrement
 	testPtr = new Test();
 
 	testPtr->desc   = "Increment / decrement";
@@ -214,7 +207,7 @@ void utest::loadTestData(){
 
 	suitePtr->testList->push_back(testPtr);
 
-	// TEST ### - Operator not
+	// TEST #12 - Operator not
 	testPtr = new Test();
 
 	testPtr->desc   = "Operator not";
@@ -223,7 +216,7 @@ void utest::loadTestData(){
 
 	suitePtr->testList->push_back(testPtr);
 
-	// TEST ### - Boolean conversion
+	// TEST #13 - Boolean conversion
 	testPtr = new Test();
 
 	testPtr->desc   = "Boolean conversion";
@@ -232,7 +225,7 @@ void utest::loadTestData(){
 
 	suitePtr->testList->push_back(testPtr);
 
-	// TEST ### - Comparison operators
+	// TEST #14 - Comparison operators
 	testPtr = new Test();
 
 	testPtr->desc   = "Comparison operators";
@@ -249,7 +242,7 @@ void utest::loadTestData(){
 
 	suites.push_back(suitePtr);
 
-	// TEST ### - Global unary operators
+	// TEST #15 - Global unary operators
 	testPtr = new Test();
 
 	testPtr->desc   = "Global unary operators";
@@ -258,7 +251,7 @@ void utest::loadTestData(){
 
 	suitePtr->testList->push_back(testPtr);
 
-	// TEST ### - Global binary operators
+	// TEST #16 - Global binary operators
 	testPtr = new Test();
 
 	testPtr->desc   = "Global binary operators";
@@ -275,7 +268,7 @@ void utest::loadTestData(){
 
 	suites.push_back(suitePtr);
 
-	// TEST ### - Absolute member function
+	// TEST #17 - Absolute member function
 	testPtr = new Test();
 
 	testPtr->desc   = "Absolute member function";
@@ -284,7 +277,7 @@ void utest::loadTestData(){
 
 	suitePtr->testList->push_back(testPtr);
 
-	// TEST ### - Type conversion
+	// TEST #18 - Type conversion
 	testPtr = new Test();
 
 	testPtr->desc   = "Type conversion";
@@ -293,7 +286,7 @@ void utest::loadTestData(){
 
 	suitePtr->testList->push_back(testPtr);
 
-	// TEST ### - Sign handling
+	// TEST #19 - Sign handling
 	testPtr = new Test();
 
 	testPtr->desc   = "Sign handling";
@@ -302,7 +295,7 @@ void utest::loadTestData(){
 
 	suitePtr->testList->push_back(testPtr);
 
-	// TEST ### - Overflow
+	// TEST #20 - Overflow
 	testPtr = new Test();
 
 	testPtr->desc   = "Overflow";
@@ -417,12 +410,8 @@ void utest::test3(){
 void utest::test4(){
 	try{
 		rational<int>(2, 0);
-		throw bad_rational();
 	}
 	catch(bad_rational&){}
-	catch(...){
-		throw bad_rational();
-	}
 }
 
 /** Test#5 - Copy constructor. */
@@ -486,12 +475,8 @@ void utest::test8(){
 	try{
 		r = 1;
 		r /= zero;
-		throw bad_rational();
 	}
 	catch(bad_rational&){}
-	catch(...){
-		throw bad_rational();
-	}
 }
 
 /** Test#9 - Arithmetic assignment with int type. */
@@ -526,12 +511,8 @@ void utest::test10(){
 	try{
 		r = 1;
 		r /= 0;
-		throw bad_rational();
 	}
 	catch(bad_rational&){}
-	catch(...){
-		throw bad_rational();
-	}
 }
 
 /** Test#11 - Increment/decrement. */

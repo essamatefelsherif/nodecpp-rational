@@ -1,6 +1,23 @@
+# https://github.com/essamatefelsherif/nodecpp-rational
+
+# C++ intermediate files
+*.out
+*.o
+*.so
+*.gcno
+*.gcda
+*.gcov
+
+# node modules
+node_modules
+package-lock.json
+
 # other folders
-docs
-tmp
+build/
+tmp/
+docs/
+
+# config files
 .lcovrc
 .coveralls.yml
 

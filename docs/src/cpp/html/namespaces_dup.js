@@ -1,6 +1,6 @@
 var namespaces_dup =
 [
     [ "addon", "namespaceaddon.html", "namespaceaddon" ],
-    [ "esm", "namespaceesm.html", "namespaceesm" ],
+    [ "src", "namespacesrc.html", "namespacesrc" ],
     [ "utest", "namespaceutest.html", "namespaceutest" ]
 ];

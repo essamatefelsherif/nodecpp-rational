@@ -19,7 +19,7 @@
 /**
  * A namespace to enclose the C++ rational class and global helper classes and functions.
  */
-namespace esm{
+namespace src{
 	/**
 	 * An exception class for bad rationals.
 	 */
@@ -176,19 +176,19 @@ namespace esm{
 
 /* Constructors [4] */
 template<typename I>
-esm::rational<I>::rational() : num(0), den(1){}
+src::rational<I>::rational() : num(0), den(1){}
 
 template<typename I>
-esm::rational<I>::rational(I n) : num(n), den(1){}
+src::rational<I>::rational(I n) : num(n), den(1){}
 
 template<typename I>
-esm::rational<I>::rational(I n, I d) : num(n), den(d){
+src::rational<I>::rational(I n, I d) : num(n), den(d){
 	normalize();
 }
 
 template<typename I>
 template<typename J>
-esm::rational<I>::rational(const esm::rational<J>& r){
+src::rational<I>::rational(const src::rational<J>& r){
 	if(is_normalized(
 			I(r.numerator()),
 			I(r.denominator())
@@ -204,17 +204,17 @@ esm::rational<I>::rational(const esm::rational<J>& r){
 
 /* Helper static functions [3] */
 template<typename I>
-I esm::rational<I>::inner_gcd(I a, I b, const I& zero){
+I src::rational<I>::inner_gcd(I a, I b, const I& zero){
 	return b == zero ? a : inner_gcd(b, a % b, zero);
 }
 
 template<typename I>
-I esm::rational<I>::inner_abs(I x, const I& zero){
+I src::rational<I>::inner_abs(I x, const I& zero){
 	return x < zero ? -x : +x;
 }
 
 template<typename I>
-bool esm::rational<I>::is_normalized(I n, I d, const I& zero, const I& one){
+bool src::rational<I>::is_normalized(I n, I d, const I& zero, const I& one){
 	return
 		d > zero &&
 		(n != zero || d == one) &&
@@ -223,7 +223,7 @@ bool esm::rational<I>::is_normalized(I n, I d, const I& zero, const I& one){
 
 /* Helper member functions [2] */
 template<typename I>
-void esm::rational<I>::normalize(){
+void src::rational<I>::normalize(){
 	I zero(0);
 
 	if(den == zero) throw bad_rational();
@@ -251,7 +251,7 @@ void esm::rational<I>::normalize(){
 }
 
 template<typename I>
-bool esm::rational<I>::test_invariant()const{
+bool src::rational<I>::test_invariant()const{
 	return
 		this->den > I(0) &&
 		inner_abs( inner_gcd(this->num, this->den) ) == I(1);
@@ -259,18 +259,18 @@ bool esm::rational<I>::test_invariant()const{
 
 /* Assignment [2] */
 template<typename I>
-esm::rational<I>& esm::rational<I>::operator =(const I& n){
+src::rational<I>& src::rational<I>::operator =(const I& n){
 	return assign( static_cast<I>(n), static_cast<I>(1) );
 }
 
 template<typename I>
-esm::rational<I>& esm::rational<I>::assign(const I& n, const I& d){
+src::rational<I>& src::rational<I>::assign(const I& n, const I& d){
 	return *this = rational<I>( static_cast<I>(n), static_cast<I>(d) );
 }
 
 /* Arithmetic assignment operators [8] */
 template<typename I>
-esm::rational<I>& esm::rational<I>::operator +=(const rational& r){
+src::rational<I>& src::rational<I>::operator +=(const rational& r){
 	I r_num = r.numerator();
 	I r_den = r.denominator();
 
@@ -287,7 +287,7 @@ esm::rational<I>& esm::rational<I>::operator +=(const rational& r){
 }
 
 template<typename I>
-esm::rational<I>& esm::rational<I>::operator -=(const rational& r){
+src::rational<I>& src::rational<I>::operator -=(const rational& r){
 	I r_num = r.numerator();
 	I r_den = r.denominator();
 
@@ -304,7 +304,7 @@ esm::rational<I>& esm::rational<I>::operator -=(const rational& r){
 }
 
 template<typename I>
-esm::rational<I>& esm::rational<I>::operator *=(const rational& r){
+src::rational<I>& src::rational<I>::operator *=(const rational& r){
 	I r_num = r.num;
 	I r_den = r.den;
 
@@ -318,7 +318,7 @@ esm::rational<I>& esm::rational<I>::operator *=(const rational& r){
 }
 
 template<typename I>
-esm::rational<I>& esm::rational<I>::operator /=(const rational& r){
+src::rational<I>& src::rational<I>::operator /=(const rational& r){
 	I r_num = r.num;
 	I r_den = r.den;
 
@@ -347,19 +347,19 @@ esm::rational<I>& esm::rational<I>::operator /=(const rational& r){
 }
 
 template<typename I>
-esm::rational<I>& esm::rational<I>::operator +=(const I& i){
+src::rational<I>& src::rational<I>::operator +=(const I& i){
 	num += i * den;
 	return *this;
 }
 
 template<typename I>
-esm::rational<I>& esm::rational<I>::operator -=(const I& i){
+src::rational<I>& src::rational<I>::operator -=(const I& i){
 	num -= i * den;
 	return *this;
 }
 
 template<typename I>
-esm::rational<I>& esm::rational<I>::operator *=(const I& i){
+src::rational<I>& src::rational<I>::operator *=(const I& i){
 	I gcd = inner_abs( inner_gcd( static_cast<I>(i), den ) );
 	num *= i / gcd;
 	den /= gcd;
@@ -367,7 +367,7 @@ esm::rational<I>& esm::rational<I>::operator *=(const I& i){
 }
 
 template<typename I>
-esm::rational<I>& esm::rational<I>::operator /=(const I& i){
+src::rational<I>& src::rational<I>::operator /=(const I& i){
 	const I zero(0);
 
 	if(i == zero) throw bad_rational();
@@ -387,26 +387,26 @@ esm::rational<I>& esm::rational<I>::operator /=(const I& i){
 
 /* Increment and decrement operators [4] */
 template<typename I>
-esm::rational<I>& esm::rational<I>::operator ++(){
+src::rational<I>& src::rational<I>::operator ++(){
 	num += den;
 	return *this;
 }
 
 template<typename I>
-esm::rational<I>& esm::rational<I>::operator --(){
+src::rational<I>& src::rational<I>::operator --(){
 	num -= den;
 	return *this;
 }
 
 template<typename I>
-esm::rational<I> esm::rational<I>::operator ++(int){
+src::rational<I> src::rational<I>::operator ++(int){
 	rational t(*this);
 	++(*this);
 	return t;
 }
 
 template<typename I>
-esm::rational<I> esm::rational<I>::operator --(int){
+src::rational<I> src::rational<I>::operator --(int){
 	rational t(*this);
 	--(*this);
 	return t;
@@ -414,19 +414,19 @@ esm::rational<I> esm::rational<I>::operator --(int){
 
 /* Operator not [1] */
 template<typename I>
-bool esm::rational<I>::operator !() const{
+bool src::rational<I>::operator !() const{
 	return !num;
 }
 
 /* Boolean conversion [1] */
 template<typename I>
-esm::rational<I>::operator bool() const{
+src::rational<I>::operator bool() const{
 	return static_cast<bool>(num);
 }
 
 /* Comparison operators [4] */
 template<typename I>
-bool esm::rational<I>::operator <(const rational& r) const{
+bool src::rational<I>::operator <(const rational& r) const{
 	const I zero(0);
 
 	assert( this->den > zero );
@@ -479,23 +479,23 @@ bool esm::rational<I>::operator <(const rational& r) const{
 }
 
 template<typename I>
-bool esm::rational<I>::operator >(const rational& r) const{
+bool src::rational<I>::operator >(const rational& r) const{
 	return !(*this < r || *this == r);
 }
 
 template<typename I>
-bool esm::rational<I>::operator ==(const rational& r) const{
+bool src::rational<I>::operator ==(const rational& r) const{
 	return (num == r.numerator() && den == r.denominator());
 }
 
 template<typename I>
-bool esm::rational<I>::operator !=(const rational& r) const{
+bool src::rational<I>::operator !=(const rational& r) const{
 	return (num != r.numerator() || den != r.denominator());
 }
 
 /* Comparison with integers [4] */
 template<typename I>
-bool esm::rational<I>::operator <(const I& i) const{
+bool src::rational<I>::operator <(const I& i) const{
 	const I zero(0);
 
 	assert(this->den > zero);
@@ -507,111 +507,111 @@ bool esm::rational<I>::operator <(const I& i) const{
 }
 
 template<typename I>
-bool esm::rational<I>::operator >(const I& i) const{
+bool src::rational<I>::operator >(const I& i) const{
 	return operator ==(i) ? false : !(operator <(i));
 }
 
 template<typename I>
-bool esm::rational<I>::operator ==(const I& i) const{
+bool src::rational<I>::operator ==(const I& i) const{
 	return ((den == I(1)) && (num == i));
 }
 
 template<typename I>
-bool esm::rational<I>::operator !=(const I& i) const{
+bool src::rational<I>::operator !=(const I& i) const{
 	return ((den != I(1)) || (num != i));
 }
 
 /* Global unary operators [2] */
 template<typename I>
-inline esm::rational<I> esm::operator +(const rational<I>& r){
+inline src::rational<I> src::operator +(const rational<I>& r){
 	return r;
 }
 
 template<typename I>
-inline esm::rational<I> esm::operator -(const rational<I>& r){
+inline src::rational<I> src::operator -(const rational<I>& r){
 	return rational<I>( static_cast<I>(-r.numerator()), r.denominator() );
 }
 
 /* Global binary operators [12] */
 template<typename I>
-inline esm::rational<I> esm::operator+ (const rational<I>& a, const rational<I>& b){
+inline src::rational<I> src::operator+ (const rational<I>& a, const rational<I>& b){
 	rational<I> t(a);
 	t += b;
 	return t;
 }
 
 template<typename I>
-inline esm::rational<I> esm::operator+ (const rational<I>& r, const I& i){
+inline src::rational<I> src::operator+ (const rational<I>& r, const I& i){
 	rational<I> t(r);
 	t += i;
 	return t;
 }
 
 template<typename I>
-inline esm::rational<I> esm::operator+ (const I& i, const rational<I>& r){
+inline src::rational<I> src::operator+ (const I& i, const rational<I>& r){
 	rational<I> t(r);
 	t += i;
 	return t;
 }
 
 template<typename I>
-inline esm::rational<I> esm::operator- (const rational<I>& a, const rational<I>& b){
+inline src::rational<I> src::operator- (const rational<I>& a, const rational<I>& b){
 	rational<I> t(a);
 	t -= b;
 	return t;
 }
 
 template<typename I>
-inline esm::rational<I> esm::operator- (const rational<I>& r, const I& i){
+inline src::rational<I> src::operator- (const rational<I>& r, const I& i){
 	rational<I> t(r);
 	t -= i;
 	return t;
 }
 
 template<typename I>
-inline esm::rational<I> esm::operator- (const I& i, const rational<I>& r){
+inline src::rational<I> src::operator- (const I& i, const rational<I>& r){
 	rational<I> t(r);
 	t -= i;
 	return -t;
 }
 
 template<typename I>
-inline esm::rational<I> esm::operator* (const rational<I>& a, const rational<I>& b){
+inline src::rational<I> src::operator* (const rational<I>& a, const rational<I>& b){
 	rational<I> t(a);
 	t *= b;
 	return t;
 }
 
 template<typename I>
-inline esm::rational<I> esm::operator* (const rational<I>& r, const I& i){
+inline src::rational<I> src::operator* (const rational<I>& r, const I& i){
 	rational<I> t(r);
 	t *= i;
 	return t;
 }
 
 template<typename I>
-inline esm::rational<I> esm::operator* (const I& i, const rational<I>& r){
+inline src::rational<I> src::operator* (const I& i, const rational<I>& r){
 	rational<I> t(r);
 	t *= i;
 	return t;
 }
 
 template<typename I>
-inline esm::rational<I> esm::operator/ (const rational<I>& a, const rational<I>& b){
+inline src::rational<I> src::operator/ (const rational<I>& a, const rational<I>& b){
 	rational<I> t(a);
 	t /= b;
 	return t;
 }
 
 template<typename I>
-inline esm::rational<I> esm::operator/ (const rational<I>& r, const I& i){
+inline src::rational<I> src::operator/ (const rational<I>& r, const I& i){
 	rational<I> t(r);
 	t /= i;
 	return t;
 }
 
 template<typename I>
-inline esm::rational<I> esm::operator/ (const I& i, const rational<I>& r){
+inline src::rational<I> src::operator/ (const I& i, const rational<I>& r){
 	rational<I> t(i);
 	t /= r;
 	return t;
@@ -619,13 +619,13 @@ inline esm::rational<I> esm::operator/ (const I& i, const rational<I>& r){
 
 /* Global absolute value function [1] */
 template<typename I>
-inline esm::rational<I> esm::abs(const rational<I>& r){
+inline src::rational<I> src::abs(const rational<I>& r){
 	return r.numerator() >= I(0) ? r : -r;
 }
 
 /* Global input and output operators [2] */
 template<typename I>
-std::istream& esm::operator >>(std::istream& is, rational<I>& r){
+std::istream& src::operator >>(std::istream& is, rational<I>& r){
     using std::ios;
 
     I n = I(0), d = I(1);
@@ -658,7 +658,7 @@ std::istream& esm::operator >>(std::istream& is, rational<I>& r){
 }
 
 template<typename I>
-std::ostream& esm::operator <<(std::ostream& os, const rational<I>& r){
+std::ostream& src::operator <<(std::ostream& os, const rational<I>& r){
 	std::ostringstream ss;
 
 	ss.copyfmt( os );
@@ -681,7 +681,7 @@ std::ostream& esm::operator <<(std::ostream& os, const rational<I>& r){
 
 /* Global type conversion function [1] */
 template<typename T, typename I>
-inline T esm::rational_cast(const rational<I>& r){
+inline T src::rational_cast(const rational<I>& r){
 
 	return static_cast<T>(r.numerator()) / static_cast<T>(r.denominator());
 }

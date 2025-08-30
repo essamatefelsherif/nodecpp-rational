@@ -26,7 +26,7 @@ namespace addon{
 	using v8::Persistent;
 	using v8::Function;
 
-	using esm::rational;
+	using src::rational;
 
 	/**
 	 * A class that extends the base class ObjectWrap provided by Node.js and
@@ -71,6 +71,12 @@ namespace addon{
 
 			static void Assign(const FunctionCallbackInfo<Value>&);
 
+			static void SelfAdd(const FunctionCallbackInfo<Value>&);
+			static void SelfSub(const FunctionCallbackInfo<Value>&);
+			static void SelfMul(const FunctionCallbackInfo<Value>&);
+			static void SelfDiv(const FunctionCallbackInfo<Value>&);
+			static void SelfPow(const FunctionCallbackInfo<Value>&);
+
 			static void Add(const FunctionCallbackInfo<Value>&);
 			static void Sub(const FunctionCallbackInfo<Value>&);
 			static void Mul(const FunctionCallbackInfo<Value>&);
@@ -82,8 +88,12 @@ namespace addon{
 			static void PostInc(const FunctionCallbackInfo<Value>&);
 			static void PostDec(const FunctionCallbackInfo<Value>&);
 
+			static void SelfNeg (const FunctionCallbackInfo<Value>&);
+			static void SelfAbs (const FunctionCallbackInfo<Value>&);
+
 			static void Neg (const FunctionCallbackInfo<Value>&);
 			static void Abs (const FunctionCallbackInfo<Value>&);
+
 			static void Not (const FunctionCallbackInfo<Value>&);
 			static void Bool(const FunctionCallbackInfo<Value>&);
 

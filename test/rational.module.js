@@ -175,7 +175,7 @@ class Rational{
 	 * @returns  {object} The Rational object denoted by this.
 	 * @throws   {TypeError} If other than one arguments is given, or invalid argument type is used.
 	 */
-	add(arg){
+	selfAdd(arg){
 		switch(arguments.length){
 			case 1:
 				if(typeof arg === 'object' && arg instanceof Rational){
@@ -210,7 +210,7 @@ class Rational{
 	 * @returns  {object} The Rational object denoted by this.
 	 * @throws   {TypeError} If other than one arguments is given, or invalid argument type is used.
 	 */
-	sub(arg){
+	selfSub(arg){
 		switch(arguments.length){
 			case 1:
 				if(typeof arg === 'object' && arg instanceof Rational){
@@ -245,7 +245,7 @@ class Rational{
 	 * @returns  {object} The Rational object denoted by this.
 	 * @throws   {TypeError} If other than one arguments is given, or invalid argument type is used.
 	 */
-	mul(arg){
+	selfMul(arg){
 		switch(arguments.length){
 			case 1:
 				if(typeof arg === 'object' && arg instanceof Rational){
@@ -280,7 +280,7 @@ class Rational{
 	 * @returns  {object} The Rational object denoted by this.
 	 * @throws   {TypeError} If other than one arguments is given, or invalid argument type is used.
 	 */
-	div(arg){
+	selfDiv(arg){
 		switch(arguments.length){
 			case 1:
 				if(typeof arg === 'object' && arg instanceof Rational){
@@ -338,6 +338,211 @@ class Rational{
 	 * @returns  {object} The Rational object denoted by this.
 	 * @throws   {TypeError} If other than one arguments is given, or invalid argument type is used.
 	 */
+	selfPow(arg){
+		switch(arguments.length){
+			case 1:
+				arg = this._validate(arg);
+
+				let r = new Rational(1);
+				for(let i = 0; i < Math.abs(arg); i++){
+					r = r.selfMul(this);
+				}
+				if(arg < 0){
+					r = (new Rational(1)).selfDiv(r);
+				}
+
+				this.num = r.getNumerator();
+				this.den = r.getDenominator();
+				return this;
+			default:
+				throw TypeError(`Rational: invalid number of arguments`);
+		}
+	}
+
+	/**
+	 * @method
+	 * @instance
+	 * @memberof module:rational-module.Rational
+	 * @param    {object|number} arg - Rational object or integer number.
+	 * @desc     Adds this Rational object to another Rational object or an integer value.
+	 * @returns  {object} New Rational object.
+	 * @throws   {TypeError} If other than one arguments is given, or invalid argument type is used.
+	 */
+	add(arg){
+		switch(arguments.length){
+			case 1:
+				let _num = this.num;
+				let _den = this.den;
+
+				if(typeof arg === 'object' && arg instanceof Rational){
+					let r_num = arg.getNumerator();
+					let r_den = arg.getDenominator();
+
+					let g = Rational.gcd(_den, r_den);
+
+					_den /= g;
+					_num = _num * (r_den / g) + r_num * _den;
+
+					g = Math.abs( Rational.gcd(_num, g) );
+					_num /= g;
+					_den *= (r_den/g);
+				}
+				else{
+					arg = this._validate(arg);
+					_num += arg * _den;
+				}
+				return new Rational(_num, _den);
+			default:
+				throw TypeError(`Rational: invalid number of arguments`);
+		}
+	}
+
+	/**
+	 * @method
+	 * @instance
+	 * @memberof module:rational-module.Rational
+	 * @param    {object|number} arg - Rational object or integer number.
+	 * @desc     Subtracts from this Rational object another Rational object or an integer value.
+	 * @returns  {object} New Rational object.
+	 * @throws   {TypeError} If other than one arguments is given, or invalid argument type is used.
+	 */
+	sub(arg){
+		switch(arguments.length){
+			case 1:
+				let _num = this.num;
+				let _den = this.den;
+
+				if(typeof arg === 'object' && arg instanceof Rational){
+					let r_num = arg.getNumerator();
+					let r_den = arg.getDenominator();
+
+					let g = Rational.gcd(_den, r_den);
+
+					_den /= g;
+					_num = _num * (r_den / g) - r_num * _den;
+
+					g = Math.abs( Rational.gcd(_num, g) );
+					_num /= g;
+					_den *= (r_den/g);
+				}
+				else{
+					arg = this._validate(arg);
+					_num -= arg * _den;
+				}
+				return new Rational(_num, _den);
+			default:
+				throw TypeError(`Rational: invalid number of arguments`);
+		}
+	}
+
+	/**
+	 * @method
+	 * @instance
+	 * @memberof module:rational-module.Rational
+	 * @param    {object|number} arg - Rational object or integer number.
+	 * @desc     Multiplies this Rational object by another Rational object or an integer value.
+	 * @returns  {object} New Rational object.
+	 * @throws   {TypeError} If other than one arguments is given, or invalid argument type is used.
+	 */
+	mul(arg){
+		switch(arguments.length){
+			case 1:
+				let _num = this.num;
+				let _den = this.den;
+
+				if(typeof arg === 'object' && arg instanceof Rational){
+					let r_num = arg.getNumerator();
+					let r_den = arg.getDenominator();
+
+					let gcd1 = Math.abs( Rational.gcd(_num, r_den) );
+					let gcd2 = Math.abs( Rational.gcd(r_num, _den) );
+
+					_num = (_num/gcd1) * (r_num/gcd2);
+					_den = (_den/gcd2) * (r_den/gcd1);
+				}
+				else{
+					arg = this._validate(arg);
+
+					let gcd = Math.abs( Rational.gcd( arg, _den ) );
+					_num *= arg / gcd;
+					_den /= gcd;
+				}
+				return new Rational(_num, _den);
+			default:
+				throw TypeError(`Rational: invalid number of arguments`);
+		}
+	}
+
+	/**
+	 * @method
+	 * @instance
+	 * @memberof module:rational-module.Rational
+	 * @param    {object|number} arg - Rational object or integer number.
+	 * @desc     Divides this Rational object by another Rational object or an integer value.
+	 * @returns  {object} New Rational object.
+	 * @throws   {TypeError} If other than one arguments is given, or invalid argument type is used.
+	 */
+	div(arg){
+		switch(arguments.length){
+			case 1:
+				let _num = this.num;
+				let _den = this.den;
+
+				if(typeof arg === 'object' && arg instanceof Rational){
+
+					let r_num = arg.getNumerator();
+					let r_den = arg.getDenominator();
+
+					if(r_num === 0){
+						throw TypeError(`Rational: division by zero`);
+					}
+
+					if(_num === 0) return new Rational(_num, _den);
+
+					let gcd1 = Math.abs( Rational.gcd(_num, r_num) );
+					let gcd2 = Math.abs( Rational.gcd(r_den, _den) );
+
+					_num = (_num/gcd1) * (r_den/gcd2);
+					_den = (_den/gcd2) * (r_num/gcd1);
+
+					if(_den < 0){
+						_num = -_num;
+						_den = -_den;
+					}
+				}
+				else{
+					arg = this._validate(arg);
+
+					if(arg === 0){
+						throw TypeError(`Rational: division by zero`);
+					}
+
+ 					if(_num == 0) return this;
+
+					let gcd = Math.abs( Rational.gcd(_num, arg) );
+					_num = _num / gcd;
+					_den *= (arg / gcd);
+
+					if(_den < 0){
+						_num = -_num;
+						_den = -_den;
+					}
+				}
+				return new Rational(_num, _den);
+			default:
+				throw TypeError(`Rational: invalid number of arguments`);
+		}
+	}
+
+	/**
+	 * @method
+	 * @instance
+	 * @memberof module:rational-module.Rational
+	 * @param    {number} arg - Integer number.
+	 * @desc     Raise this Rational object to the power given.
+	 * @returns  {object} New Rational object.
+	 * @throws   {TypeError} If other than one arguments is given, or invalid argument type is used.
+	 */
 	pow(arg){
 		switch(arguments.length){
 			case 1:
@@ -345,15 +550,13 @@ class Rational{
 
 				let r = new Rational(1);
 				for(let i = 0; i < Math.abs(arg); i++){
-					r = r.mul(this);
+					r = r.selfMul(this);
 				}
 				if(arg < 0){
-					r = (new Rational(1)).div(r);
+					r = (new Rational(1)).selfDiv(r);
 				}
 
-				this.num = r.getNumerator();
-				this.den = r.getDenominator();
-				return this;
+				return new Rational(r.getNumerator(), r.getDenominator());
 			default:
 				throw TypeError(`Rational: invalid number of arguments`);
 		}
@@ -433,7 +636,7 @@ class Rational{
 	 * @returns  {object} The Rational object denoted by this.
 	 * @throws   {TypeError} If an argument was given.
 	 */
-	abs(){
+	selfAbs(){
 		if(arguments.length > 0){
 			throw TypeError(`Rational: invalid number of arguments`);
 		}
@@ -449,12 +652,44 @@ class Rational{
 	 * @returns  {object} The Rational object denoted by this.
 	 * @throws   {TypeError} If an argument was given.
 	 */
-	neg(){
+	selfNeg(){
 		if(arguments.length > 0){
 			throw TypeError(`Rational: invalid number of arguments`);
 		}
 		if(this.num !== 0) this.num = -this.num;
 		return this;
+	}
+
+	/**
+	 * @method
+	 * @instance
+	 * @memberof module:rational-module.Rational
+	 * @desc     Returns absolute value of Rational object.
+	 * @returns  {object} New Rational object.
+	 * @throws   {TypeError} If an argument was given.
+	 */
+	abs(){
+		if(arguments.length > 0){
+			throw TypeError(`Rational: invalid number of arguments`);
+		}
+		if(this.num < 0) return new Rational(-this.num, this.den);
+		return new Rational(this.num, this.den);;
+	}
+
+	/**
+	 * @method
+	 * @instance
+	 * @memberof module:rational-module.Rational
+	 * @desc     Returns negate of this Rational object sign.
+	 * @returns  {object} New Rational object.
+	 * @throws   {TypeError} If an argument was given.
+	 */
+	neg(){
+		if(arguments.length > 0){
+			throw TypeError(`Rational: invalid number of arguments`);
+		}
+		if(this.num !== 0) return new Rational(-this.num, this.den);
+		return new Rational(this.num, this.den);
 	}
 
 	/**
