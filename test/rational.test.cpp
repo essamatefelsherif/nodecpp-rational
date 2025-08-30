@@ -1,6 +1,6 @@
 /**
  * @file	rational.test.cpp
- * @author  Essam A. El-Sherif <esm.elsh@gmail.com>
+ * @author  Essam A. El-Sherif
  * @version v1.0.0
  *
  * A testing module for the rational template class defined by rational.h

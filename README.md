@@ -11,17 +11,73 @@ npm install [-g] @essamonline/nodecpp-rational
 
 ## Usage
 
-With CommonJS in JavaScript,
+With CommonJS in JavaScript:
 
 ```js
 const { Rational } = require('@essamonline/nodecpp-rational');
 ```
 
-With ESM or TypeScript,
+With ESM or TypeScript:
 
 ```ts
 import addon from '@essamonline/nodecpp-rational';
 const { Rational } = addon;
+```
+
+## Rational Class
+
+```js
+class Rational{
+	/*** Static Methods [1] ***/
+	static gcd(a, b)
+
+	/*** Constructor ***/
+	constructor(arg1, arg2)
+
+	/*** Helper Instance Methods [2] ***/
+	_validate(arg)
+	_normalize()
+
+	/*** Accessors Instance Methods [2] ***/
+	getNumerator()
+	getDenominator()
+
+	/*** Operations Instance Methods [27] ***/
+	assign(arg1, arg2)
+
+	selfAdd(arg)
+	selfSub(arg)
+	selfMul(arg)
+	selfDiv(arg)
+	selfPow(arg)
+
+	add(arg)
+	sub(arg)
+	mul(arg)
+	div(arg)
+	pow(arg)
+
+	preInc()
+	preDec()
+	postInc()
+	postDec()
+
+	selfAbs()
+	selfNeg()
+
+	abs()
+	neg()
+	not()
+	bool()
+	
+	lessThan(arg)
+	greaterThan(arg)
+	equalTo(arg)
+	notEqualTo(arg)
+
+	valueOf()
+	toString()
+}
 ```
 
 
