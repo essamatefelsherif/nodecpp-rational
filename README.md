@@ -125,7 +125,7 @@ class Rational{
 
 ## Documentation
 
-Source code documentation, along with test coverage reports for JavaScript and C++ addon code are all included under [Documentation](https://essamatefelsherif.github.io/nodecpp-rational/docs).
+Source code documentation, along with test coverage reports for JavaScript and C++ addon code are all included under [Documentation](https://essamatefelsherif.github.io/nodecpp-rational/).
 
 
 ## License
