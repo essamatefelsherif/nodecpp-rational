@@ -2,6 +2,9 @@
 
 A Node.js native C++ addon that defines a JavaScript class **Rational** for representing and manipulating rational numbers.
 
+[![NPM Version](https://img.shields.io/npm/v/%40essamonline%2Fnodecpp-rational?logo=npm)](https://www.npmjs.com/package/@essamonline/nodecpp-rational)
+[![NPM Downloads](https://img.shields.io/npm/d18m/%40essamonline%2Fnodecpp-rational?logo=npm&color=lightgreen)](https://www.npmjs.com/package/@essamonline/nodecpp-rational)
+[![Coverage Status](https://coveralls.io/repos/github/essamatefelsherif/nodecpp-rational/badge.svg?branch=main)](https://coveralls.io/github/essamatefelsherif/nodecpp-rational?branch=main)
 
 ## Installation
 
