@@ -1,9 +1,9 @@
 /**
  * @file    rational.h
- * @author  Essam A. El-Sherif <esm.elsh@gmail.com>
+ * @author  Essam A. El-Sherif
  * @version v1.0.0
  *
- * A C++ header that defines a template based class for representing and manipulating rational numbers.
+ * A C++ header that defines a template based class 'rational' for representing and manipulating rational numbers.
  */
 
 #ifndef __RATIONAL_H__

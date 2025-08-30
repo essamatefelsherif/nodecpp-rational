@@ -1,7 +1,7 @@
 /**
  * @file    addon.cpp
  * @version v1.0.0
- * @author  Essam A. El-Sherif <esm.elsh@gmail.com>
+ * @author  Essam A. El-Sherif
  */
 
 #include "rational-addon.h"

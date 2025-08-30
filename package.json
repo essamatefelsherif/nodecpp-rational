@@ -1,7 +1,7 @@
 {
 	"name"   : "@essamonline/nodecpp-rational",
 	"version": "1.0.0-pre-release-0",
-	"description": "A Node.js native C++ addon that defines a JavaScript class for representing and manipulating rational numbers.",
+	"description": "A Node.js native C++ addon that defines a JavaScript class Rational for representing and manipulating rational numbers.",
 	"main"   : "lib/index.js",
 	"gypfile": true,
 	"scripts": {
@@ -19,7 +19,7 @@
 		"cppCover"    : "npm run cppTest && make -C test lcov-report && make -C test clean-int"
 	},
 	"type"    : "commonjs",
-	"keywords": ["node.js", "C++", "addon"],
+	"keywords": ["node.js", "C++", "addon", "rational"],
 	"author"  : {
 		"name" : "Essam A. El-Sherif",
 		"email": "esm.elsh@gmail.com",
